@@ -5,6 +5,7 @@
 	<partition_criticality> 0 </partition_criticality>
 	<partition_period> </partition_period>
 	<partition_duration> </partition_duration>
+	<partition_sched_policy> RATE_MONOTONIC_PROTOCOL </partition_sched_policy>
 	<tasks>
 		<task>
 			<task_name> tarefa_um </task_name>
