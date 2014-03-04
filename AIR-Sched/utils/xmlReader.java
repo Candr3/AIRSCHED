@@ -1,4 +1,4 @@
-package cheddarMiddleWare;
+package utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class xmlReader {
@@ -15,7 +17,13 @@ public class xmlReader {
 	public static void printXmlFile(String filePath) {
 
 		try {
-			getDoc(filePath);
+			Document doc = getDoc(filePath);
+			System.out.println(doc.getDocumentElement().getNodeName());
+
+			NodeList nl = doc.getDocumentElement().getChildNodes();
+			for (int i = 0; i < nl.getLength(); i++)
+				System.out.println(nl.item(i). getTextContent());
+
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,7 +37,11 @@ public class xmlReader {
 
 	}
 
-	private static Document getDoc(String filePath)
+	/**
+	 * Le um ficheiro xml, e retorna um doc
+	 * 
+	 **/
+	public static Document getDoc(String filePath)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		File file = new File(filePath);
