@@ -1,6 +1,7 @@
 package src;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import utils.XmlPartitionParser;
 import utils.XmlReader;
@@ -11,7 +12,10 @@ public class Airsched {
 
 		// XmlReader.printXmlFile("partitions/partition1.xml");
 
-		XmlPartitionParser.parsePartitions();
+		ArrayList<Partition> al = XmlPartitionParser.parsePartitions();
+
+		for (Partition p : al)
+			System.out.println(p.toString());
 
 	}
 

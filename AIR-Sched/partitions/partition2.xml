@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <partition>
-	<partition_name> part2 </partition_name>
-	<partition_id> 30 </partition_id>
-	<partition_criticality> 0 </partition_criticality>
-	<partition_period> </partition_period>
-	<partition_duration> </partition_duration>
-	<partition_sched_policy> EARLIEST_DEADLINE_FIRST </partition_sched_policy>
+	<partition_name>part2</partition_name>
+	<partition_id>30</partition_id>
+	<partition_criticality>0</partition_criticality>
+	<partition_period></partition_period>
+	<partition_duration></partition_duration>
+	<partition_sched_policy>EARLIEST_DEADLINE_FIRST</partition_sched_policy>
 	<tasks>
 		<task>
-			<task_name> tarefa_um </task_name>
-			<task_id> t1 </task_id>
-			<task_period> 50 </task_period>
-			<task_wcet> 10 </task_wcet>
-			<task_deadline> hard </task_deadline>
-			<task_priority> 1 </task_priority>
+			<task_name>tarefa_um</task_name>
+			<task_id>1</task_id>
+			<task_period>50</task_period>
+			<task_wcet>10</task_wcet>
+			<task_deadline>hard</task_deadline>
+			<task_priority>1</task_priority>
 		</task>
 		<task>
-			<task_name> tarefa _dois </task_name>
-			<task_id> t2 </task_id>
-			<task_period> 75 </task_period>
-			<task_wcet> 10 </task_wcet>
-			<task_deadline> hard </task_deadline>
-			<task_priority> 2</task_priority>
+			<task_name>tarefa _dois</task_name>
+			<task_id>2</task_id>
+			<task_period>75</task_period>
+			<task_wcet>10</task_wcet>
+			<task_deadline>hard</task_deadline>
+			<task_priority>2</task_priority>
 		</task>
 		<task>
-			<task_name> tarefa_tres </task_name>
-			<task_id> t3 </task_id>
-			<task_period> 20 </task_period>
-			<task_wcet> 3 </task_wcet>
-			<task_deadline> hard </task_deadline>
-			<task_priority> 3</task_priority>
+			<task_name>tarefa_tres</task_name>
+			<task_id>3</task_id>
+			<task_period>20</task_period>
+			<task_wcet>3</task_wcet>
+			<task_deadline>hard</task_deadline>
+			<task_priority>3</task_priority>
 		</task>
 	</tasks>
 </partition>
