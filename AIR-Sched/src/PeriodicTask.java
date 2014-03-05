@@ -1,0 +1,23 @@
+package src;
+
+import utils.MathUtils;
+
+public class PeriodicTask {
+
+	private String name;
+	private int id;
+	private int period;
+	private int capacity;
+
+	public PeriodicTask(String name, int id, int period, int capacity) {
+		this.name = name;
+		this.id = id;
+		this.period = period;
+		this.capacity = capacity;
+	}
+
+	public int getTaskDBF(int t) {
+		return MathUtils.lowerBoundDivision(t, period) * capacity;
+	}
+
+}
