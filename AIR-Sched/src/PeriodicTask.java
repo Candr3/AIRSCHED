@@ -20,4 +20,13 @@ public class PeriodicTask {
 		return MathUtils.lowerBoundDivision(t, period) * capacity;
 	}
 
+	public String toString() {
+		StringBuilder str = new StringBuilder("");
+		str.append("*nome : " + name + "\n");
+		str.append("*id   : " + id + "\n");
+		str.append("*perio: " + period + "\n");
+		str.append("*wcet : " + capacity + "\n");
+		return str.toString();
+	}
+
 }

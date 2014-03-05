@@ -8,6 +8,7 @@
 		<comm_type> COMMUNICATION_TYPE_SAMPLING </comm_type>
 		<comm_buffer_size> </comm_buffer_size>
 		<comm_validity_interval> 10 </comm_validity_interval>
+		<comm_latency> </comm_latency>
 	</comm>
 	<comm>
 		<sender_part_id> 2 </sender_part_id>
@@ -17,5 +18,6 @@
 		<comm_type> COMMUNICATION_TYPE_QUEUEING </comm_type>
 		<comm_buffer_size> 10 </comm_buffer_size>
 		<comm_validity_interval> </comm_validity_interval>
+		<comm_latency> </comm_latency>
 	</comm>	
 </communications>

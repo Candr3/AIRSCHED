@@ -22,7 +22,7 @@ public class XmlReader {
 
 			NodeList nl = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nl.getLength(); i++)
-				System.out.println(nl.item(i). getTextContent());
+				System.out.println(" -> " + nl.item(i).getNodeName());
 
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block

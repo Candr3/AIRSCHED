@@ -31,4 +31,17 @@ public class Partition {
 		// return 0;
 		// }
 	}
+	
+	public String toString() {
+		StringBuilder str = new StringBuilder("");
+		str.append("***************\n");
+		str.append("nome : " + name + "\n");
+		str.append("id   : " + id + "\n");
+		str.append("pol  : " + sched_pol + "\n");
+		str.append("tasks:\n");
+		for(PeriodicTask pt : workload) {
+			str.append(pt.toString());
+		}
+		return str.toString();
+	}
 }
