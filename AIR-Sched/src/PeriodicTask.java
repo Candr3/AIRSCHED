@@ -29,4 +29,18 @@ public class PeriodicTask {
 		return str.toString();
 	}
 
+	/**
+	 * @return the period
+	 */
+	public int getPeriod() {
+		return period;
+	}
+
+	/**
+	 * @return the capacity
+	 */
+	public int getCapacity() {
+		return capacity;
+	}
+
 }

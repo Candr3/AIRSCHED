@@ -4,7 +4,7 @@
 	<partition_id>1</partition_id>
 	<partition_criticality>0</partition_criticality>
 	<partition_period></partition_period>
-	<partition_duration></partition_duration>
+	<partition_duration>200</partition_duration>
 	<partition_sched_policy>RATE_MONOTONIC</partition_sched_policy>
 	<tasks>
 		<task>

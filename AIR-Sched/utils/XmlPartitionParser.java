@@ -62,13 +62,13 @@ public class XmlPartitionParser {
 			String task_name = e.getElementsByTagName("task_name").item(0)
 					.getTextContent();
 			int task_id = Integer.parseInt(partElem
-					.getElementsByTagName("task_id").item(0).getTextContent());
+					.getElementsByTagName("task_id").item(i).getTextContent());
 			int task_period = Integer.parseInt(partElem
-					.getElementsByTagName("task_period").item(0)
+					.getElementsByTagName("task_period").item(i)
 					.getTextContent());
 			int task_capacity = Integer
 					.parseInt(partElem.getElementsByTagName("task_wcet")
-							.item(0).getTextContent());
+							.item(i).getTextContent());
 
 			ret.addTask(new PeriodicTask(task_name, task_id, task_period,
 					task_capacity));

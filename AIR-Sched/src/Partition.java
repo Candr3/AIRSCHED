@@ -31,7 +31,15 @@ public class Partition {
 		// return 0;
 		// }
 	}
-	
+
+	public double getTaskUtilization() {
+		double ut = 0.0;
+		for (PeriodicTask pt : workload) {
+			ut += (pt.getCapacity() * 1.0) / (pt.getPeriod() * 1.0);
+		}
+		return ut;
+	}
+
 	public String toString() {
 		StringBuilder str = new StringBuilder("");
 		str.append("***************\n");
@@ -39,8 +47,12 @@ public class Partition {
 		str.append("id   : " + id + "\n");
 		str.append("pol  : " + sched_pol + "\n");
 		str.append("tasks:\n");
-		for(PeriodicTask pt : workload) {
+		for (PeriodicTask pt : workload) {
 			str.append(pt.toString());
+		}
+		str.append("utilization : " + getTaskUtilization() + "\n");
+		for (int i = 1; i <= 100; i++) {
+			str.append("sbf " + i + " : " + getPartitionDBF(i) + "\n");
 		}
 		return str.toString();
 	}
