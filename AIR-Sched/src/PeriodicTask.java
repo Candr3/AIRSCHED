@@ -16,7 +16,7 @@ public class PeriodicTask {
 		this.capacity = capacity;
 	}
 
-	public int getTaskDBF(int t) {
+	public double getTaskDBF(int t) {
 		return MathUtils.lowerBoundDivision(t, period) * capacity;
 	}
 

@@ -2,6 +2,8 @@ package src;
 
 import java.util.ArrayList;
 
+import utils.MathUtils;
+
 public class Partition {
 
 	private String name;
@@ -20,9 +22,9 @@ public class Partition {
 		workload.add(task);
 	}
 
-	public int getPartitionDBF(int t) {
+	public double getPartitionDBF(int t) {
 		// if (sched_pol == SchedulingPolicy.EARLIEST_DEADLINE_FIRST) {
-		int sum = 0;
+		double sum = 0.0;
 		for (PeriodicTask pt : workload) {
 			sum = pt.getTaskDBF(t);
 		}
@@ -40,6 +42,18 @@ public class Partition {
 		return ut;
 	}
 
+	public int getHyperPeriod() {
+		if (workload.size() <= 0)
+			return 0;
+
+		int hp = workload.get(0).getPeriod();
+		for (int i = 1; i < workload.size(); i++) {
+			hp = MathUtils.lcm(hp, workload.get(i).getPeriod());
+		}
+
+		return hp;
+	}
+
 	public String toString() {
 		StringBuilder str = new StringBuilder("");
 		str.append("***************\n");
@@ -51,6 +65,7 @@ public class Partition {
 			str.append(pt.toString());
 		}
 		str.append("utilization : " + getTaskUtilization() + "\n");
+		str.append("hyperperiod : " + getHyperPeriod() + "\n");
 		for (int i = 1; i <= 100; i++) {
 			str.append("sbf " + i + " : " + getPartitionDBF(i) + "\n");
 		}
