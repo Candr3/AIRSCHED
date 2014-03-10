@@ -11,7 +11,21 @@ public class MathUtils {
 	}
 
 	public static int lowerBoundDivision(int dividendo, int divisor) {
-		return (dividendo / divisor);
+		return Math.round(dividendo / divisor);
+	}
+
+	public static double upperBoundDivision(double dividendo, double divisor) {
+		if ((dividendo % divisor) == 0.0) {
+			return (dividendo / divisor);
+		} else {
+			Double ret = (dividendo / divisor);
+			return ret.intValue() + 1.0;
+		}
+	}
+
+	public static double lowerBoundDivision(double dividendo, double divisor) {
+		Double ret = (dividendo / divisor);
+		return ret.intValue() * 1.0;
 	}
 
 	// lcm - euclides algorithm

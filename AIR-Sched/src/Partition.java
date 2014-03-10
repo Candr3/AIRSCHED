@@ -51,7 +51,7 @@ public class Partition {
 			hp = MathUtils.lcm(hp, workload.get(i).getPeriod());
 		}
 
-		return hp;
+		return hp/2;
 	}
 
 	public String toString() {
