@@ -39,6 +39,17 @@ public class MathUtils {
 		return a;
 	}
 
+	public static int lcm(int[] v) {
+		if (v.length == 1)
+			return v[0];
+		if (v.length == 2)
+			return lcm(v[0], v[1]);
+		int ret = lcm(v[0], v[1]);
+		for (int i = 2; i < v.length; i++)
+			ret = lcm(ret, v[i]);
+		return ret;
+	}
+
 	public static int lcm(int a, int b) {
 		return (a / gcd(a, b)) * b;
 	}

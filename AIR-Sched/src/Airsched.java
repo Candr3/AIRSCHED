@@ -1,16 +1,21 @@
 package src;
 
+import utils.MathUtils;
 
 public class Airsched {
 
 	public static void main(String[] args) {
-		
-		if(args[1] = "-dir") {
-			
-			
-		}
-		
-		
+
+		// if(args[1] = "-dir") {
+
+		// }
+
+		int[] v1 = { 7, 3, 1 };
+		int[] v2 = { 29, 10, 5 };
+
+		System.out.println(MathUtils.lcm(v1));
+		System.out.println(MathUtils.lcm(v2));
+
 		/*
 		 * String[] cmd = { "/bin/bash", "-c", "ls | grep log" }; try { Process
 		 * p = Runtime.getRuntime().exec(cmd);
