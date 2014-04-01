@@ -5,7 +5,7 @@
 	<partition_criticality>0</partition_criticality>
 	<partition_period></partition_period>
 	<partition_duration>300</partition_duration>
-	<partition_sched_policy>EARLIEST_DEADLINE_FIRST</partition_sched_policy>
+	<partition_sched_policy>RATE_MONOTONIC</partition_sched_policy>
 	<tasks>
 		<task>
 			<task_name>tarefa_um</task_name>
