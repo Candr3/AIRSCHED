@@ -51,6 +51,7 @@ public class Airsched {
 			System.out.println(p.toString());
 		
 		CartsInterface.PartToCartsXml(al);
+		CartsInterface.analyse();
 		
 		
 		/*

@@ -23,9 +23,11 @@ import utils.PartitionUtils;
 public class CartsInterface {
 
 	public static void analyse() {
-//		BashUtils.cmdInterpreter(cmd);
+		String[] cmd = { "java", "-jar", "carts/Carts.jar", "carts/xml/input.xml",
+				"PRM", "carts/xml/output.xml" };
+		System.out.println(BashUtils.cmdInterpreter(cmd));
 	}
-	
+
 	public static boolean PartToCartsXml(List<Partition> lop) {
 
 		try {
@@ -145,11 +147,19 @@ public class CartsInterface {
 			DOMSource ds = new DOMSource(doc);
 
 			// -> file
-			//File dir = new File("./carts");
-			//dir.mkdir();
-			
-			StreamResult sr = new StreamResult(new File("./carts/xml/input.xml"));
-			
+			File dir = new File("carts/xml");
+			File file = new File("carts/xml/input.xml");
+			// System.out.println(dir.getCanonicalPath());
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			// dir.mkdir();
+
+			StreamResult sr = new StreamResult(file);
+
 			// -> sys.out
 			// StreamResult sr = new StreamResult(System.out);
 
@@ -163,5 +173,4 @@ public class CartsInterface {
 
 		return true;
 	}
-
 }
