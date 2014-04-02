@@ -1,9 +1,11 @@
 package cartsInterface;
 
+import java.io.File;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -15,10 +17,15 @@ import org.w3c.dom.Element;
 
 import src.Partition;
 import src.PeriodicTask;
+import utils.BashUtils;
 import utils.PartitionUtils;
 
 public class CartsInterface {
 
+	public static void analyse() {
+//		BashUtils.cmdInterpreter(cmd);
+	}
+	
 	public static boolean PartToCartsXml(List<Partition> lop) {
 
 		try {
@@ -55,14 +62,17 @@ public class CartsInterface {
 			// root element - system
 			Element root = doc.createElement("system");
 			doc.appendChild(root);
+
 			// os_scheduler
 			Attr ossched = doc.createAttribute("os_scheduler");
 			ossched.setValue("DM");
 			root.setAttributeNode(ossched);
+
 			// min period
 			Attr min_period = doc.createAttribute("min_period");
 			min_period.setValue("1");
 			root.setAttributeNode(min_period);
+
 			// max period
 			Attr max_period = doc.createAttribute("max_period");
 			max_period.setValue(String.valueOf(HyperPeriod));
@@ -122,19 +132,31 @@ public class CartsInterface {
 				}
 			}
 
-			// escreve para xml
+			// to xml
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer t = tf.newTransformer();
+			t.setOutputProperty(OutputKeys.METHOD, "xml");
+			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			t.setOutputProperty(OutputKeys.INDENT, "yes");
+
+			doc.setXmlStandalone(true);
+			doc.normalize();
+			doc.normalizeDocument();
 			DOMSource ds = new DOMSource(doc);
 
-			// dest -> file
-			// StreamResult sr = new StreamResult(new File("./file.xml"));
-			// dest -> sys.out
-			StreamResult sr = new StreamResult(System.out);
+			// -> file
+			//File dir = new File("./carts");
+			//dir.mkdir();
+			
+			StreamResult sr = new StreamResult(new File("./carts/xml/input.xml"));
+			
+			// -> sys.out
+			// StreamResult sr = new StreamResult(System.out);
 
 			t.transform(ds, sr);
 
 		} catch (Exception e) {
+			// TODO
 			e.printStackTrace();
 			return false;
 		}
