@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utils.MathUtils;
 
@@ -51,7 +52,23 @@ public class Partition {
 			hp = MathUtils.lcm(hp, workload.get(i).getPeriod());
 		}
 
-		return hp/2;
+		return hp / 2;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public List<PeriodicTask> getWorkload() {
+		return workload;
+	}
+
+	public SchedulingPolicy getSchedulerType() {
+		return sched_pol;
 	}
 
 	public String toString() {
@@ -66,9 +83,9 @@ public class Partition {
 		}
 		str.append("utilization : " + getTaskUtilization() + "\n");
 		str.append("hyperperiod : " + getHyperPeriod() + "\n");
-		for (int i = 1; i <= 100; i++) {
-			str.append("sbf " + i + " : " + getPartitionDBF(i) + "\n");
-		}
+		// for (int i = 1; i <= 100; i++) {
+		// str.append("sbf " + i + " : " + getPartitionDBF(i) + "\n");
+		// }
 		return str.toString();
 	}
 }
