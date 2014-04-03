@@ -69,7 +69,6 @@ public class XmlPartitionParser {
 			int task_capacity = Integer
 					.parseInt(partElem.getElementsByTagName("task_wcet")
 							.item(i).getTextContent());
-
 			ret.addTask(new PeriodicTask(task_name, task_id, task_period,
 					task_capacity));
 		}

@@ -2,6 +2,7 @@ package utils;
 
 import java.util.List;
 
+import src.Airsched;
 import src.Partition;
 
 public class PartitionUtils {
@@ -19,6 +20,9 @@ public class PartitionUtils {
 		for (int i = 2; i < lop.size(); i++)
 			ret = MathUtils.lcm(ret, lop.get(i).getHyperPeriod());
 
+		// larger values may induce a crash
+		if (ret > Airsched.MAX_PERIOD)
+			return Airsched.MAX_PERIOD;
 		return ret;
 	}
 

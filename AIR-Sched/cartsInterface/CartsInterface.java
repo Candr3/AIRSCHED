@@ -22,7 +22,7 @@ import utils.PartitionUtils;
 
 public class CartsInterface {
 
-	public static void analyse() {
+	public static void CartsAnalyse() {
 		String[] cmd = { "java", "-jar", "carts/Carts.jar", "carts/xml/input.xml",
 				"PRM", "carts/xml/output.xml" };
 		System.out.println(BashUtils.cmdInterpreter(cmd));
@@ -166,6 +166,7 @@ public class CartsInterface {
 			t.transform(ds, sr);
 
 		} catch (Exception e) {
+			
 			// TODO
 			e.printStackTrace();
 			return false;
