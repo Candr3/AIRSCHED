@@ -7,8 +7,6 @@ import cartsInterface.CartsInterface;
 import utils.XmlPartitionParser;
 
 public class Airsched {
-	
-	public final static int MAX_PERIOD = 1500; 
 
 	public static void main(String[] args) {
 		// if(args[1] = "-dir") {
@@ -46,6 +44,7 @@ public class Airsched {
 			System.out.println(p.toString());
 		CartsInterface.PartToCartsXml(al);
 		CartsInterface.CartsAnalyse();
+		CartsInterface.XmlExport();
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 

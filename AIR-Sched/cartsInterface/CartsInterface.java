@@ -1,6 +1,7 @@
 package cartsInterface;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,19 +15,18 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import src.Partition;
 import src.PeriodicTask;
+import src.SchedSystem;
 import utils.BashUtils;
 import utils.PartitionUtils;
+import utils.XmlReader;
+import utils.XmlReaderException;
 
 public class CartsInterface {
-
-	public static void CartsAnalyse() {
-		String[] cmd = { "java", "-jar", "carts/Carts.jar", "carts/xml/input.xml",
-				"PRM", "carts/xml/output.xml" };
-		System.out.println(BashUtils.cmdInterpreter(cmd));
-	}
 
 	public static boolean PartToCartsXml(List<Partition> lop) {
 
@@ -55,6 +55,7 @@ public class CartsInterface {
 
 			// hyperperiod
 			int HyperPeriod = PartitionUtils.getPartsHp(lop);
+			System.out.println("lol -> " + HyperPeriod);
 
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -166,7 +167,7 @@ public class CartsInterface {
 			t.transform(ds, sr);
 
 		} catch (Exception e) {
-			
+
 			// TODO
 			e.printStackTrace();
 			return false;
@@ -174,4 +175,38 @@ public class CartsInterface {
 
 		return true;
 	}
+
+	public static void CartsAnalyse() {
+		String[] cmd = { "java", "-jar", "carts/Carts.jar",
+				"carts/xml/input.xml", "PRM", "carts/xml/output.xml" };
+		System.out.println(BashUtils.cmdInterpreter(cmd));
+	}
+
+	public static boolean XmlExport(SchedSystem ss) {
+		
+		Document doc;
+		try {
+			doc = XmlReader.getDoc("carts/xml/output.xml");
+		} catch (XmlReaderException e) {
+			// TODO
+			e.printStackTrace();
+			return false;
+		}
+
+		NodeList n = doc.getElementsByTagName("component");
+		int numberOfComponents = n.getLength();
+		
+		
+		for(int i = 0; i < numberOfComponents; i++) {
+			
+		}
+		
+		for (int i = 0; i < n.getLength(); i++) {
+			System.out.println(n.item(i).getNodeName() + " xx "
+					+ n.item(i).getNodeValue());
+		}
+
+		return true;
+	}
+
 }
