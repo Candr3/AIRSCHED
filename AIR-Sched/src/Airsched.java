@@ -36,15 +36,19 @@ public class Airsched {
 		 * e.printStackTrace(); }
 		 */
 
+		SchedSystem ss = new SchedSystem();
+		
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
 		ArrayList<Partition> al = XmlPartitionParser.parsePartitions();
 		// CompositionalAnalyzer.PRM(al.get(0));
-		for (Partition p : al)
+		for (Partition p : al) {
+			ss.addPartition(p);
 			System.out.println(p.toString());
+		}
 		CartsInterface.PartToCartsXml(al);
 		CartsInterface.CartsAnalyse();
-		CartsInterface.XmlExport();
+		CartsInterface.XmlExport(ss);
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 

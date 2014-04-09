@@ -15,6 +15,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -183,7 +184,7 @@ public class CartsInterface {
 	}
 
 	public static boolean XmlExport(SchedSystem ss) {
-		
+
 		Document doc;
 		try {
 			doc = XmlReader.getDoc("carts/xml/output.xml");
@@ -193,17 +194,27 @@ public class CartsInterface {
 			return false;
 		}
 
-		NodeList n = doc.getElementsByTagName("component");
-		int numberOfComponents = n.getLength();
-		
-		
-		for(int i = 0; i < numberOfComponents; i++) {
-			
+		// TODO THHHHHHHOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRR
+		NodeList SUPER_NODE = doc.getChildNodes().item(0).getChildNodes();
+
+		NodeList resource = SUPER_NODE.item(1).getChildNodes();
+		NodeList p_task = SUPER_NODE.item(3).getChildNodes();
+		NodeList[] components = new NodeList[ss.numberOfPartitions()];
+
+		for (int i = 0; i < ss.numberOfPartitions(); i++) {
+			components[i] = SUPER_NODE.item(5 + i * 2).getChildNodes();
 		}
-		
-		for (int i = 0; i < n.getLength(); i++) {
-			System.out.println(n.item(i).getNodeName() + " xx "
-					+ n.item(i).getNodeValue());
+
+		for (int i = 0; i < resource.getLength(); i++) {
+			// System.out.println(resource.item(i).getNodeName() + " " +
+			// resource.item(i).hasAttributes());
+			Node curr = resource.item(i);
+			if (curr.hasAttributes()) {
+				NamedNodeMap lol = curr.getAttributes();
+				System.out.println(lol.getNamedItem("period"));
+				System.out.println(lol.getNamedItem("bandwidth"));
+				System.out.println(lol.getNamedItem("deadline"));
+			}
 		}
 
 		return true;
