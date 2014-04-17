@@ -8,6 +8,8 @@ import utils.XmlPartitionParser;
 
 public class Airsched {
 
+	public static final double UTILIZATION_THRESHOLD = 1.0;
+
 	public static void main(String[] args) {
 		// if(args[1] = "-dir") {
 		// }
@@ -37,7 +39,7 @@ public class Airsched {
 		 */
 
 		SchedSystem ss = new SchedSystem();
-		
+
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
 		ArrayList<Partition> al = XmlPartitionParser.parsePartitions();

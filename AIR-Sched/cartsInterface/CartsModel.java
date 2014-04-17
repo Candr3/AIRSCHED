@@ -16,10 +16,31 @@ public class CartsModel {
 		this.model_period = model_period;
 		this.model_execution = model_execution;
 		this.model_bandwith = model_bandwith;
+		this.model_components = new ArrayList<CartsComponent>();
 	}
 
 	public void addComponent(CartsComponent cc) {
 		this.model_components.add(cc);
+	}
+
+	public String getAlgo() {
+		return algo;
+	}
+
+	public int getModel_period() {
+		return model_period;
+	}
+
+	public int getModel_execution() {
+		return model_execution;
+	}
+
+	public double getModel_bandwith() {
+		return model_bandwith;
+	}
+
+	public ArrayList<CartsComponent> getModel_components() {
+		return model_components;
 	}
 
 }

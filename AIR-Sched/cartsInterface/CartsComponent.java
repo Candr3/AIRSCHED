@@ -16,5 +16,29 @@ public class CartsComponent {
 		this.execution = execution;
 		this.bandwith = bandwith;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getAlgo() {
+		return algo;
+	}
+
+	public int getPeriod() {
+		return period;
+	}
+
+	public int getExecution() {
+		return execution;
+	}
+
+	public double getBandwith() {
+		return bandwith;
+	}
+	
+	public String toString() {
+		StringBuilder str = new StringBuilder("");
+	}
 	
 }

@@ -2,6 +2,7 @@ package cartsInterface;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,6 +20,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import src.Airsched;
 import src.Partition;
 import src.PeriodicTask;
 import src.SchedSystem;
@@ -183,7 +185,7 @@ public class CartsInterface {
 		System.out.println(BashUtils.cmdInterpreter(cmd));
 	}
 
-	public static boolean XmlExport(SchedSystem ss) {
+	public static LinkedList<CartsModel> XmlExport(SchedSystem ss) {
 
 		Document doc;
 		try {
@@ -191,33 +193,115 @@ public class CartsInterface {
 		} catch (XmlReaderException e) {
 			// TODO
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 
 		// TODO THHHHHHHOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRR
-		NodeList SUPER_NODE = doc.getChildNodes().item(0).getChildNodes();
+		Node SUPER_NODE = doc.getChildNodes().item(0);
+		NodeList SUPER_NODE_CHILDS = SUPER_NODE.getChildNodes();
 
-		NodeList resource = SUPER_NODE.item(1).getChildNodes();
-		NodeList p_task = SUPER_NODE.item(3).getChildNodes();
-		NodeList[] components = new NodeList[ss.numberOfPartitions()];
+		NamedNodeMap temp = SUPER_NODE.getAttributes();
+		// String name = temp.getNamedItem("name").getNodeValue();
+		String algo = temp.getNamedItem("algorithm").getNodeValue();
+		// System.out.println("name: " + name);
+		// System.out.println("algo: " + algo);
+
+		NodeList resource = SUPER_NODE_CHILDS.item(1).getChildNodes();
+		NodeList proc_task = SUPER_NODE_CHILDS.item(3).getChildNodes();
+		String[] component_name = new String[ss.numberOfPartitions()];
+		NodeList[] component_resource = new NodeList[ss.numberOfPartitions()];
+		NodeList[] component_proc_task = new NodeList[ss.numberOfPartitions()];
 
 		for (int i = 0; i < ss.numberOfPartitions(); i++) {
-			components[i] = SUPER_NODE.item(5 + i * 2).getChildNodes();
+			component_name[i] = SUPER_NODE_CHILDS.item(5 + i * 2)
+					.getAttributes().getNamedItem("name").getNodeValue();
+			component_resource[i] = SUPER_NODE_CHILDS.item(5 + i * 2)
+					.getChildNodes().item(1).getChildNodes();
+			component_proc_task[i] = SUPER_NODE_CHILDS.item(5 + i * 2)
+					.getChildNodes().item(3).getChildNodes();
 		}
+
+		LinkedList<CartsModel> ret = new LinkedList<CartsModel>();
 
 		for (int i = 0; i < resource.getLength(); i++) {
 			// System.out.println(resource.item(i).getNodeName() + " " +
 			// resource.item(i).hasAttributes());
-			Node curr = resource.item(i);
-			if (curr.hasAttributes()) {
-				NamedNodeMap lol = curr.getAttributes();
-				System.out.println(lol.getNamedItem("period"));
-				System.out.println(lol.getNamedItem("bandwidth"));
-				System.out.println(lol.getNamedItem("deadline"));
+			// Node curr = resource.item(i);
+			// if (curr.hasAttributes()) {
+			// NamedNodeMap lol = curr.getAttributes();
+			// System.out.println(lol.getNamedItem("period"));
+			// System.out.println(lol.getNamedItem("bandwidth"));
+			// System.out.println(lol.getNamedItem("deadline"));
+			// }
+			if (resource.item(i).hasAttributes()) {
+
+				// PhDs that dont know how to ouput xml correctly...
+				double model_bandwith;
+				try {
+					model_bandwith = Double.valueOf(resource.item(i)
+							.getAttributes().getNamedItem("bandwidth")
+							.getNodeValue());
+				} catch (NumberFormatException e) {
+					int tempn = Integer.valueOf(resource.item(i)
+							.getAttributes().getNamedItem("bandwidth")
+							.getNodeValue());
+					model_bandwith = Double.valueOf(tempn);
+				}
+
+				// bandwith is the system utilization factor
+				if (model_bandwith < Airsched.UTILIZATION_THRESHOLD) {
+					System.out.println("tou aki!!! " + i + " xxx "
+							+ model_bandwith);
+
+					int model_period = Integer.valueOf(resource.item(i)
+							.getAttributes().getNamedItem("period")
+							.getNodeValue());
+
+					int model_execution = Integer.valueOf(proc_task.item(i)
+							.getAttributes().getNamedItem("execution_time")
+							.getNodeValue());
+
+					CartsModel cm = new CartsModel(algo, model_period,
+							model_execution, model_bandwith);
+
+					// parse components
+					for (int j = 0; j < component_resource.length; j++) {
+
+						double component_model_bandwith;
+						try {
+							component_model_bandwith = Double.valueOf(resource
+									.item(i).getAttributes()
+									.getNamedItem("bandwidth").getNodeValue());
+						} catch (NumberFormatException e) {
+							int tempn = Integer.valueOf(resource.item(i)
+									.getAttributes().getNamedItem("bandwidth")
+									.getNodeValue());
+							component_model_bandwith = Double.valueOf(tempn);
+						}
+
+						int component_model_period = Integer.valueOf(resource
+								.item(i).getAttributes().getNamedItem("period")
+								.getNodeValue());
+
+						int component_model_execution = Integer
+								.valueOf(proc_task.item(i).getAttributes()
+										.getNamedItem("execution_time")
+										.getNodeValue());
+
+						CartsComponent new_comp = new CartsComponent(
+								component_name[j], algo,
+								component_model_period,
+								component_model_execution,
+								component_model_bandwith);
+
+						cm.addComponent(new_comp);
+					}
+
+					ret.add(cm);
+				}
 			}
 		}
 
-		return true;
+		return ret;
 	}
-
 }

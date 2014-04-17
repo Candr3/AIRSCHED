@@ -1,11 +1,11 @@
 <system max_period="200" min_period="1" os_scheduler="DM">
-<component max_period="200" min_period="1" name="part1" scheduler="DM">
-<task d="33" e="7" name="tarefa_um" p="33"/>
-<task d="41" e="9" name="tarefa _dois" p="41"/>
-</component>
 <component max_period="200" min_period="1" name="part2" scheduler="DM">
-<task d="23" e="2" name="tarefa_um" p="23"/>
-<task d="47" e="5" name="tarefa _dois" p="47"/>
-<task d="28" e="3" name="tarefa_tres" p="28"/>
+<task d="40" e="2" name="tarefa_um" p="40"/>
+<task d="50" e="3" name="tarefa _dois" p="50"/>
+<task d="45" e="3" name="tarefa_tres" p="45"/>
+</component>
+<component max_period="200" min_period="1" name="part1" scheduler="DM">
+<task d="50" e="3" name="tarefa_um" p="50"/>
+<task d="60" e="4" name="tarefa _dois" p="60"/>
 </component>
 </system>
