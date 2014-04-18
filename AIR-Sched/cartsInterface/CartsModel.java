@@ -3,7 +3,7 @@ package cartsInterface;
 import java.util.ArrayList;
 
 public class CartsModel {
-	
+
 	private String algo;
 	private int model_period;
 	private int model_execution;
@@ -41,6 +41,17 @@ public class CartsModel {
 
 	public ArrayList<CartsComponent> getModel_components() {
 		return model_components;
+	}
+
+	public String toString() {
+		StringBuilder str = new StringBuilder("");
+		str.append("*** system ***\n");
+		str.append("per: " + model_period + "\n");
+		str.append("exe: " + model_execution + "\n");
+		str.append("bw:  " + model_bandwith + "\n");
+		for (CartsComponent cc : model_components)
+			str.append(cc.toString());
+		return str.toString();
 	}
 
 }

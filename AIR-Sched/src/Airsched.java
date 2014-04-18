@@ -50,7 +50,7 @@ public class Airsched {
 		}
 		CartsInterface.PartToCartsXml(al);
 		CartsInterface.CartsAnalyse();
-		CartsInterface.XmlExport(ss);
+		ss.addModels(CartsInterface.XmlExport(ss));
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 

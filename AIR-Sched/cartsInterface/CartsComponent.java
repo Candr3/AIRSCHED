@@ -36,9 +36,15 @@ public class CartsComponent {
 	public double getBandwith() {
 		return bandwith;
 	}
-	
+
 	public String toString() {
 		StringBuilder str = new StringBuilder("");
+		str.append("*** partition " + name + " ***\n");
+		str.append("alg: " + algo + "\n");
+		str.append("pri: " + period + "\n");
+		str.append("exc: " + execution + "\n");
+		str.append("bw:  " + bandwith + "\n");
+		return str.toString();
 	}
-	
+
 }
