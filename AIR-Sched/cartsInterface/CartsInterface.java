@@ -1,7 +1,6 @@
 package cartsInterface;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -250,8 +249,8 @@ public class CartsInterface {
 
 				// bandwith is the system utilization factor
 				if (model_bandwith < Airsched.UTILIZATION_THRESHOLD) {
-					System.out.println("tou aki!!! " + i + " xxx "
-							+ model_bandwith);
+					// System.out.println("tou aki!!! " + i + " xxx "+
+					// model_bandwith);
 
 					int model_period = Integer.valueOf(resource.item(i)
 							.getAttributes().getNamedItem("period")
@@ -269,22 +268,26 @@ public class CartsInterface {
 
 						double component_model_bandwith;
 						try {
-							component_model_bandwith = Double.valueOf(resource
+							component_model_bandwith = Double
+									.valueOf(component_resource[j].item(i)
+											.getAttributes()
+											.getNamedItem("bandwidth")
+											.getNodeValue());
+						} catch (NumberFormatException e) {
+							int tempn = Integer.valueOf(component_resource[j]
 									.item(i).getAttributes()
 									.getNamedItem("bandwidth").getNodeValue());
-						} catch (NumberFormatException e) {
-							int tempn = Integer.valueOf(resource.item(i)
-									.getAttributes().getNamedItem("bandwidth")
-									.getNodeValue());
 							component_model_bandwith = Double.valueOf(tempn);
 						}
 
-						int component_model_period = Integer.valueOf(resource
-								.item(i).getAttributes().getNamedItem("period")
-								.getNodeValue());
+						int component_model_period = Integer
+								.valueOf(component_resource[j].item(i)
+										.getAttributes().getNamedItem("period")
+										.getNodeValue());
 
 						int component_model_execution = Integer
-								.valueOf(proc_task.item(i).getAttributes()
+								.valueOf(component_proc_task[j].item(i)
+										.getAttributes()
 										.getNamedItem("execution_time")
 										.getNodeValue());
 
@@ -294,14 +297,17 @@ public class CartsInterface {
 								component_model_execution,
 								component_model_bandwith);
 
+						// System.out.println("tou aki");
 						cm.addComponent(new_comp);
 					}
 
+					// System.out.println("TOU AKI");
 					ret.add(cm);
 				}
 			}
 		}
 
+		System.out.println(ret.size());
 		return ret;
 	}
 }

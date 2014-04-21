@@ -46,11 +46,12 @@ public class Airsched {
 		// CompositionalAnalyzer.PRM(al.get(0));
 		for (Partition p : al) {
 			ss.addPartition(p);
-			System.out.println(p.toString());
+			// System.out.println(p.toString());
 		}
 		CartsInterface.PartToCartsXml(al);
 		CartsInterface.CartsAnalyse();
 		ss.addModels(CartsInterface.XmlExport(ss));
+		System.out.println(ss.toString());
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 
