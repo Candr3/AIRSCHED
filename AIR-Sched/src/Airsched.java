@@ -2,6 +2,8 @@ package src;
 
 import java.util.ArrayList;
 
+import cheddarInterface.CheddarParser;
+
 import cartsInterface.CartsInterface;
 
 import utils.XmlPartitionParser;
@@ -52,6 +54,7 @@ public class Airsched {
 		CartsInterface.CartsAnalyse();
 		ss.addModels(CartsInterface.XmlExport(ss));
 		System.out.println(ss.toString());
+		CheddarParser.createCheddarXml(ss.getPartitions(), ss.getModel(0));
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 

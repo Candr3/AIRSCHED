@@ -27,6 +27,22 @@ public class SchedSystem {
 		return lop.size();
 	}
 
+	public List<Partition> getPartitions() {
+		return lop;
+	}
+
+	public Partition getPartition(int index) {
+		return lop.get(index);
+	}
+
+	public List<CartsModel> getModels() {
+		return locm;
+	}
+
+	public CartsModel getModel(int index) {
+		return locm.get(index);
+	}
+
 	public String toString() {
 		StringBuilder str = new StringBuilder("");
 		str.append("*** Partitions ***\n\n");
