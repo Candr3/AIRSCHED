@@ -1,6 +1,9 @@
 package cheddarInterface;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,58 +20,134 @@ import org.w3c.dom.Element;
 
 import cartsInterface.CartsModel;
 import src.Partition;
+import src.PeriodicTask;
 
 public class CheddarParser {
 
+	private static final String OUTPUT_DIR = "cheddarFiles/xml";
+	private static final String OUTPUT_FILE = "cheddarFiles/xml/input.xml";
+
 	public static boolean createCheddarXml(List<Partition> lop, CartsModel cm) {
 
-		try {
-			int id = 0;
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.newDocument();
-
-			// docs root node
-			Element root = doc.createElement("cheddar");
-			doc.appendChild(root);
-
-			id++;
-			root.appendChild(genCoreUnitElem(doc, id));
-
-			// to xml
-			TransformerFactory tf = TransformerFactory.newInstance();
-			Transformer t = tf.newTransformer();
-			t.setOutputProperty(OutputKeys.METHOD, "xml");
-			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			t.setOutputProperty(OutputKeys.INDENT, "yes");
-
-			doc.setXmlStandalone(true);
-			doc.normalize();
-			doc.normalizeDocument();
-			DOMSource ds = new DOMSource(doc);
-
-			// -> file
-			File dir = new File("cheddarFiles/xml");
-			File file = new File("cheddarFiles/xml/input.xml");
-			// System.out.println(dir.getCanonicalPath());
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
-			if (!file.exists()) {
+		// -> file
+		File dir = new File(OUTPUT_DIR);
+		File file = new File(OUTPUT_FILE);
+		// System.out.println(dir.getCanonicalPath());
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		if (!file.exists()) {
+			try {
 				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
 			}
-			// dir.mkdir();
+		}
+		// dir.mkdir();
 
-			StreamResult sr = new StreamResult(file);
+		try {
 
-			// -> sys.out
-			// StreamResult sr = new StreamResult(System.out);
+			int id = 0;
+			BufferedWriter bwriter;
+			bwriter = new BufferedWriter(new FileWriter(OUTPUT_FILE));
 
-			t.transform(ds, sr);
+			bwriter.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+			bwriter.write("<cheddar>\n");
+			bwriter.write("  <core_units>\n");
+			id++;
+			bwriter.write("    <core_unit id=\" " + id + "\">\n");
+			bwriter.write("      <object_type>CORE_OBJECT_TYPE</object_type>\n");
+			bwriter.write("      <name>core1</name>\n");
+			bwriter.write("      <scheduling>\n");
+			bwriter.write("        <scheduling_parameters>\n");
+			bwriter.write("        <scheduler_type>HIERARCHICAL_CYCLIC_PROTOCOL</scheduler_type>\n");
+			bwriter.write("        <quantum>0</quantum>\n");
+			bwriter.write("        <preemptive_type>PREEMPTIVE</preemptive_type>\n");
+			bwriter.write("        <capacity>0</capacity>\n");
+			bwriter.write("        <period>0</period>\n");
+			bwriter.write("        <priority>0</priority>\n");
+			bwriter.write("        <start_time>0</start_time>\n");
+			bwriter.write("      </scheduling_parameters>\n");
+			bwriter.write("    </scheduling>\n");
+			bwriter.write("    <speed>1.00000</speed>\n");
+			bwriter.write("    </core_unit>\n");
+			bwriter.write("  </core_units>\n");
+			bwriter.write("  <address_spaces>\n");
+			for (int i = 0; i < lop.size(); i++) {
+				id++;
+				bwriter.write("    <address_space id=\" " + id + "\">\n");
+				bwriter.write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n");
+				bwriter.write("      <name>" + lop.get(i).getName()
+						+ "</name>\n");
+				bwriter.write("      <cpu_name>processor1</cpu_name>\n");
+				bwriter.write("      <text_memory_size>0</text_memory_size>\n");
+				bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
+				bwriter.write("      <data_memory_size>0</data_memory_size>\n");
+				bwriter.write("      <heap_memory_size>0</heap_memory_size>\n");
+				bwriter.write("      <scheduling>\n");
+				bwriter.write("        <scheduling_parameters>\n");
+				bwriter.write("          <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>\n");
+				bwriter.write("          <quantum>"
+						+ cm.getModel_components().get(i).getExecution()
+						+ "</quantum>\n");
+				bwriter.write("          <preemptive_type>PREEMPTIVE</preemptive_type>\n");
+				bwriter.write("          <capacity>0</capacity>\n");
+				bwriter.write("          <period>0</period>\n");
+				bwriter.write("          <priority>0</priority>\n");
+				bwriter.write("          <start_time>0</start_time>\n");
+				bwriter.write("        </scheduling_parameters>\n");
+				bwriter.write("      </scheduling>\n");
+				bwriter.write("    </address_space>\n");
+			}
+			bwriter.write("  </address_spaces>\n");
+			bwriter.write("  <processors>\n");
+			id++;
+			bwriter.write("    <mono_core_processor id=\" " + id + "\">\n");
+			bwriter.write("      <object_type>PROCESSOR_OBJECT_TYPE</object_type>\n");
+			bwriter.write("      <name>processor1</name>\n");
+			bwriter.write("      <network>a_network</network>\n");
+			bwriter.write("      <processor_type>MONOCORE_TYPE</processor_type>\n");
+			bwriter.write("      <migration_type>NO_MIGRATION_TYPE</migration_type>\n");
+			bwriter.write("      <core ref=\" 1\"/>\n");
+			bwriter.write("    </mono_core_processor>\n");
+			bwriter.write("  </processors>\n");
+			bwriter.write("  <tasks>\n");
+			for (Partition p : lop) {
+				for (PeriodicTask pt : p.getWorkload()) {
+					id++;
+					bwriter.write("    <periodic_task id=\" " + id + "\">\n");
+					bwriter.write("      <object_type>TASK_OBJECT_TYPE</object_type>\n");
+					bwriter.write("      <name>" + p.getName() + "_" +pt.getName() + "</name>\n");
+					bwriter.write("      <task_type>PERIODIC_TYPE</task_type>\n");
+					bwriter.write("      <cpu_name>processor1</cpu_name>\n");
+					bwriter.write("      <address_space_name>" + p.getName()
+							+ "</address_space_name>\n");
+					bwriter.write("      <capacity>" + pt.getCapacity()
+							+ "</capacity>\n");
+					bwriter.write("      <deadline>" + pt.getPeriod()
+							+ "</deadline>\n");
+					bwriter.write("      <start_time>0</start_time>\n");
+					bwriter.write("      <priority>1</priority>\n");
+					bwriter.write("      <blocking_time>0</blocking_time>\n");
+					bwriter.write("      <policy>SCHED_FIFO</policy>\n");
+					bwriter.write("      <text_memory_size>0</text_memory_size>\n");
+					bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
+					bwriter.write("      <criticality>0</criticality>\n");
+					bwriter.write("      <context_switch_overhead>0</context_switch_overhead>\n");
+					bwriter.write("      <period>" + pt.getPeriod()
+							+ "</period>\n");
+					bwriter.write("      <jitter>0</jitter>\n");
+					bwriter.write("    </periodic_task>\n");
+				}
+			}
+			bwriter.write("  </tasks>\n");
+			bwriter.write("</cheddar>");
 
-		} catch (Exception e) {
-			// TODO
+			bwriter.flush();
+			bwriter.close();
+
+		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -76,99 +155,4 @@ public class CheddarParser {
 		return true;
 	}
 
-	// gera o node com o xml de um core_unit
-	// <core_units>
-	// <core_unit id=" 1">
-	// <object_type>CORE_OBJECT_TYPE</object_type>
-	// <name>core1</name>
-	// <scheduling>
-	// <scheduling_parameters>
-	// <scheduler_type>HIERARCHICAL_CYCLIC_PROTOCOL</scheduler_type>
-	// <quantum>0</quantum>
-	// <preemptive_type>PREEMPTIVE</preemptive_type>
-	// <capacity>0</capacity>
-	// <period>0</period>
-	// <priority>0</priority>
-	// <start_time>0</start_time>
-	// </scheduling_parameters>
-	// </scheduling>
-	// <speed>1.00000</speed>
-	// </core_unit>
-	// </core_units>
-	private static Element genCoreUnitElem(Document doc, int id) {
-
-		// core_units
-		Element ret = doc.createElement("core_units");
-
-		// core_unit
-		Element cu = doc.createElement("core_unit");
-		ret.appendChild(cu);
-
-		// core_unit id
-		Attr cu_id = doc.createAttribute("id");
-		cu_id.setValue(String.valueOf(id));
-		cu.setAttributeNode(cu_id);
-
-		// object_type
-		Element objt = doc.createElement("object_type");
-		objt.appendChild(doc.createTextNode("CORE_OBJECT_TYPE"));
-		cu.appendChild(objt);
-
-		// name
-		Element name = doc.createElement("name");
-		name.appendChild(doc.createTextNode("core1"));
-		cu.appendChild(name);
-
-		// scheduling
-		Element sched = doc.createElement("scheduling");
-		cu.appendChild(sched);
-
-		// speed
-		Element speed = doc.createElement("speed");
-		speed.appendChild(doc.createTextNode("1.00000"));
-		cu.appendChild(speed);
-
-		// 2nd level - append no scheduling
-		// scheduling parameters
-		Element schedp = doc.createElement("scheduling_parameters");
-		sched.appendChild(schedp);
-
-		// 3rd level - append no scheduling parameters
-		// <scheduler_type>HIERARCHICAL_CYCLIC_PROTOCOL</scheduler_type>
-		Element schedt = doc.createElement("scheduler_type");
-		schedt.appendChild(doc.createTextNode("HIERARCHICAL_CYCLIC_PROTOCOL"));
-		schedp.appendChild(schedt);
-
-		// <quantum>0</quantum>
-		Element quantum = doc.createElement("quantum");
-		quantum.appendChild(doc.createTextNode("0"));
-		schedp.appendChild(quantum);
-
-		// <preemptive_type>PREEMPTIVE</preemptive_type>
-		Element pt = doc.createElement("preemptive_type");
-		pt.appendChild(doc.createTextNode("PREEMPTIVE"));
-		schedp.appendChild(pt);
-
-		// <capacity>0</capacity>
-		Element capacity = doc.createElement("capacity");
-		capacity.appendChild(doc.createTextNode("0"));
-		schedp.appendChild(capacity);
-
-		// <period>0</period>
-		Element period = doc.createElement("period");
-		period.appendChild(doc.createTextNode("0"));
-		schedp.appendChild(period);
-
-		// <priority>0</priority>
-		Element priority = doc.createElement("priority");
-		priority.appendChild(doc.createTextNode("0"));
-		schedp.appendChild(priority);
-
-		// <start_time>0</start_time>
-		Element start_time = doc.createElement("start_time");
-		start_time.appendChild(doc.createTextNode("0"));
-		schedp.appendChild(start_time);
-
-		return ret;
-	}
 }

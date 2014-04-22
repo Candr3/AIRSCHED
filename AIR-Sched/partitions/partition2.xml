@@ -16,7 +16,7 @@
 			<task_priority>1</task_priority>
 		</task>
 		<task>
-			<task_name>tarefa _dois</task_name>
+			<task_name>tarefa_dois</task_name>
 			<task_id>8</task_id>
 			<task_period>50</task_period>
 			<task_wcet>3</task_wcet>
