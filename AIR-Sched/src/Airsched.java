@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import cheddarInterface.CheddarParser;
 
 import cartsInterface.CartsInterface;
+import cartsInterface.CartsModel;
 
 import utils.XmlPartitionParser;
 
@@ -12,7 +13,17 @@ public class Airsched {
 
 	public static final double UTILIZATION_THRESHOLD = 1.0;
 
+	public static final int NO_PARTITION_PADDING = 1;
+	public static final int DUMMY_PARTITION_PADDING = 2;
+	public static final int PARAMETRIC_PARTITION_PADDING = 3;
+
+	private static int partition_padding_mode;
+
 	public static void main(String[] args) {
+
+		//partition_padding_mode = DUMMY_PARTITION_PADDING;
+		partition_padding_mode = NO_PARTITION_PADDING;
+
 		// if(args[1] = "-dir") {
 		// }
 		// int[] v1 = { 7, 3, 1 };
@@ -54,7 +65,11 @@ public class Airsched {
 		CartsInterface.CartsAnalyse();
 		ss.addModels(CartsInterface.XmlExport(ss));
 		System.out.println(ss.toString());
-		CheddarParser.createCheddarXml(ss.getPartitions(), ss.getModel(0));
+		for (int i = 0; i < ss.getModels().size(); i++) {
+			String name = "input" + i;
+			CheddarParser.createCheddarXml(ss.getPartitions(), ss.getModel(i),
+					name);
+		}
 		/*
 		 * Double d1 = 1.23; Double d2 = 1.78;
 		 * 
@@ -63,4 +78,9 @@ public class Airsched {
 		 * System.out.println("d1->" + d1 + " d2->" + d2);
 		 */
 	}
+
+	public static int getPartitionPaddingMode() {
+		return partition_padding_mode;
+	}
+
 }

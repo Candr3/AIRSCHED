@@ -6,39 +6,32 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import cartsInterface.CartsModel;
+import src.Airsched;
 import src.Partition;
 import src.PeriodicTask;
+import cartsInterface.CartsComponent;
+import cartsInterface.CartsModel;
 
 public class CheddarParser {
 
 	private static final String OUTPUT_DIR = "cheddarFiles/xml";
-	private static final String OUTPUT_FILE = "cheddarFiles/xml/input.xml";
 
-	public static boolean createCheddarXml(List<Partition> lop, CartsModel cm) {
+	// private static final String OUTPUT_FILE = "cheddarFiles/xml/input.xml";
+
+	public static boolean createCheddarXml(List<Partition> lop, CartsModel cm,
+			String filename) {
 
 		// -> file
 		File dir = new File(OUTPUT_DIR);
-		File file = new File(OUTPUT_FILE);
+		// File file = new File(OUTPUT_FILE);
+		File output_file = new File(OUTPUT_DIR + "/" + filename + ".xml");
 		// System.out.println(dir.getCanonicalPath());
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		if (!file.exists()) {
+		if (!output_file.exists()) {
 			try {
-				file.createNewFile();
+				output_file.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
@@ -50,7 +43,7 @@ public class CheddarParser {
 
 			int id = 0;
 			BufferedWriter bwriter;
-			bwriter = new BufferedWriter(new FileWriter(OUTPUT_FILE));
+			bwriter = new BufferedWriter(new FileWriter(output_file));
 
 			bwriter.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
 			bwriter.write("<cheddar>\n");
@@ -100,6 +93,35 @@ public class CheddarParser {
 				bwriter.write("      </scheduling>\n");
 				bwriter.write("    </address_space>\n");
 			}
+			// IDLE PARTITION
+			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
+				int sysIdle = getSystemIdle(cm);
+				if (sysIdle > 0) {
+					id++;
+					bwriter.write("    <address_space id=\" " + id + "\">\n");
+					bwriter.write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n");
+					bwriter.write("      <name>SYSTEM_IDLE</name>\n");
+					bwriter.write("      <cpu_name>processor1</cpu_name>\n");
+					bwriter.write("      <text_memory_size>0</text_memory_size>\n");
+					bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
+					bwriter.write("      <data_memory_size>0</data_memory_size>\n");
+					bwriter.write("      <heap_memory_size>0</heap_memory_size>\n");
+					bwriter.write("      <scheduling>\n");
+					bwriter.write("        <scheduling_parameters>\n");
+					bwriter.write("          <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>\n");
+					bwriter.write("          <quantum>" + sysIdle
+							+ "</quantum>\n");
+					bwriter.write("          <preemptive_type>PREEMPTIVE</preemptive_type>\n");
+					bwriter.write("          <capacity>0</capacity>\n");
+					bwriter.write("          <period>0</period>\n");
+					bwriter.write("          <priority>0</priority>\n");
+					bwriter.write("          <start_time>0</start_time>\n");
+					bwriter.write("        </scheduling_parameters>\n");
+					bwriter.write("      </scheduling>\n");
+					bwriter.write("    </address_space>\n");
+				}
+			}
+			// END OF DUMMY PARTITION
 			bwriter.write("  </address_spaces>\n");
 			bwriter.write("  <processors>\n");
 			id++;
@@ -118,7 +140,8 @@ public class CheddarParser {
 					id++;
 					bwriter.write("    <periodic_task id=\" " + id + "\">\n");
 					bwriter.write("      <object_type>TASK_OBJECT_TYPE</object_type>\n");
-					bwriter.write("      <name>" + p.getName() + "_" +pt.getName() + "</name>\n");
+					bwriter.write("      <name>" + p.getName() + "_"
+							+ pt.getName() + "</name>\n");
 					bwriter.write("      <task_type>PERIODIC_TYPE</task_type>\n");
 					bwriter.write("      <cpu_name>processor1</cpu_name>\n");
 					bwriter.write("      <address_space_name>" + p.getName()
@@ -153,6 +176,14 @@ public class CheddarParser {
 		}
 
 		return true;
+	}
+
+	private static int getSystemIdle(CartsModel cm) {
+		int compExecSum = 0;
+		for (CartsComponent cc : cm.getModel_components()) {
+			compExecSum += cc.getExecution();
+		}
+		return cm.getModel_period() - compExecSum;
 	}
 
 }
