@@ -56,7 +56,11 @@ public class CartsInterface {
 			// </system>
 
 			// hyperperiod
-			int HyperPeriod = PartitionUtils.getPartsHp(lop);
+			// int HyperPeriod = PartitionUtils.getPartsHp(lop);
+			// System.out.println("lol -> " + HyperPeriod);
+
+			// largest period
+			int HyperPeriod = PartitionUtils.getLargestPeriod(lop);
 			System.out.println("lol -> " + HyperPeriod);
 
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

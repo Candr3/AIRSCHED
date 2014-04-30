@@ -3,6 +3,7 @@ package utils;
 import java.util.List;
 
 import src.Partition;
+import src.PeriodicTask;
 
 public class PartitionUtils {
 
@@ -27,6 +28,17 @@ public class PartitionUtils {
 		// larger values may induce a crash
 		if (ret > MAX_PERIOD)
 			ret = MAX_PERIOD;
+		return ret;
+	}
+
+	public static int getLargestPeriod(List<Partition> lop) {
+		int ret = 0;
+		for (Partition p : lop) {
+			for (PeriodicTask pt : p.getWorkload()) {
+				if (pt.getPeriod() > ret)
+					ret = pt.getPeriod();
+			}
+		}
 		return ret;
 	}
 
