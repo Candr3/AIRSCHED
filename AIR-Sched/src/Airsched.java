@@ -1,5 +1,7 @@
 package src;
 
+import gui.gui;
+
 import java.util.ArrayList;
 
 import cheddarInterface.CheddarParser;
@@ -11,18 +13,22 @@ import utils.XmlPartitionParser;
 
 public class Airsched {
 
-	public static final double UTILIZATION_THRESHOLD = 1.0;
+	public static final int UTILIZATION_THRESHOLD = 100;
 
-	public static final int NO_PARTITION_PADDING = 1;
-	public static final int DUMMY_PARTITION_PADDING = 2;
-	public static final int PARAMETRIC_PARTITION_PADDING = 3;
+	public static final int NO_PARTITION_PADDING = 0;
+	public static final int DUMMY_PARTITION_PADDING = 1;
+	public static final int PARAMETRIC_PARTITION_PADDING = 2;
 
 	private static int partition_padding_mode;
+	private static int utilization_threshold;
 
 	public static void main(String[] args) {
 
-		//partition_padding_mode = DUMMY_PARTITION_PADDING;
+		gui.generateGUI();
+
+		// partition_padding_mode = DUMMY_PARTITION_PADDING;
 		partition_padding_mode = NO_PARTITION_PADDING;
+		utilization_threshold = UTILIZATION_THRESHOLD;
 
 		// if(args[1] = "-dir") {
 		// }
@@ -81,6 +87,22 @@ public class Airsched {
 
 	public static int getPartitionPaddingMode() {
 		return partition_padding_mode;
+	}
+
+	public static void setPartitionPaddingMode(int i) {
+		if (i >= 0 && i <= 2) {
+			partition_padding_mode = i;
+		}
+	}
+
+	public static int getUtilizationThreshold() {
+		return utilization_threshold;
+	}
+
+	public static void setUtilizationThreshold(int value) {
+		if (value >= 50 && value <= 100) {
+			utilization_threshold = value;
+		}
 	}
 
 }
