@@ -2,6 +2,7 @@ package src;
 
 import gui.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import cheddarInterface.CheddarParser;
@@ -13,49 +14,32 @@ import utils.XmlPartitionParser;
 
 public class Airsched {
 
-	public static final int UTILIZATION_THRESHOLD = 100;
-
 	public static final int NO_PARTITION_PADDING = 0;
 	public static final int DUMMY_PARTITION_PADDING = 1;
 	public static final int PARAMETRIC_PARTITION_PADDING = 2;
 
+	public static final int UTILIZATION_THRESHOLD = 100;
+
+	public static final String DEFAULT_INPUT_DIR = "partitions";
+	public static final String DEFAULT_OUTPUT_DIR = "cheddarFiles/xml";
+
 	private static int partition_padding_mode;
 	private static int utilization_threshold;
+	private static String input_dir;
+	private static String output_dir;
 
 	public static void main(String[] args) {
 
-		gui.generateGUI();
-
-		// partition_padding_mode = DUMMY_PARTITION_PADDING;
 		partition_padding_mode = NO_PARTITION_PADDING;
 		utilization_threshold = UTILIZATION_THRESHOLD;
+		input_dir = DEFAULT_INPUT_DIR;
+		output_dir = DEFAULT_OUTPUT_DIR;
 
-		// if(args[1] = "-dir") {
-		// }
-		// int[] v1 = { 7, 3, 1 };
-		// int[] v2 = { 29, 10, 5 };
-		// System.out.println(MathUtils.lcm(v1));
-		// System.out.println(MathUtils.lcm(v2));
+		gui.generateGUI();
 
-		/*
-		 * String[] cmd = { "/bin/bash", "-c", "ls | grep log" }; try { Process
-		 * p = Runtime.getRuntime().exec(cmd);
-		 * 
-		 * try { p.waitFor(); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 * BufferedReader br = new BufferedReader(new InputStreamReader(
-		 * p.getInputStream()));
-		 * 
-		 * StringBuilder sb = new StringBuilder(""); String line;
-		 * 
-		 * while ((line = br.readLine()) != null) { sb.append(line + "\n"); }
-		 * 
-		 * System.out.println(sb.toString());
-		 * 
-		 * } catch (IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+	}
+
+	public static void analyse() {
 
 		SchedSystem ss = new SchedSystem();
 
@@ -71,18 +55,14 @@ public class Airsched {
 		CartsInterface.CartsAnalyse();
 		ss.addModels(CartsInterface.XmlExport(ss));
 		System.out.println(ss.toString());
+		for (File f : (new File(getOutput_dir())).listFiles()) {
+			f.delete();
+		}
 		for (int i = 0; i < ss.getModels().size(); i++) {
 			String name = "input" + i;
 			CheddarParser.createCheddarXml(ss.getPartitions(), ss.getModel(i),
 					name);
 		}
-		/*
-		 * Double d1 = 1.23; Double d2 = 1.78;
-		 * 
-		 * int dd1 = d1.intValue(); int dd2 = d2.intValue();
-		 * 
-		 * System.out.println("d1->" + d1 + " d2->" + d2);
-		 */
 	}
 
 	public static int getPartitionPaddingMode() {
@@ -103,6 +83,22 @@ public class Airsched {
 		if (value >= 50 && value <= 100) {
 			utilization_threshold = value;
 		}
+	}
+
+	public static String getInput_dir() {
+		return input_dir;
+	}
+
+	public static String getOutput_dir() {
+		return output_dir;
+	}
+
+	public static void setInput_dir(String new_input_dir) {
+		input_dir = new_input_dir;
+	}
+
+	public static void setOutput_dir(String new_output_dir) {
+		output_dir = new_output_dir;
 	}
 
 }

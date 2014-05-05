@@ -252,7 +252,7 @@ public class CartsInterface {
 				}
 
 				// bandwith is the system utilization factor
-				if (model_bandwith < Airsched.UTILIZATION_THRESHOLD) {
+				if (model_bandwith < (Airsched.getUtilizationThreshold() / 100.0)) {
 					// System.out.println("tou aki!!! " + i + " xxx "+
 					// model_bandwith);
 

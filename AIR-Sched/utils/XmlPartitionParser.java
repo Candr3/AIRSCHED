@@ -34,6 +34,24 @@ public class XmlPartitionParser {
 		return ret;
 	}
 
+	public static ArrayList<Partition> parsePartitions(String dir) {
+		ArrayList<Partition> ret = new ArrayList<Partition>();
+		File folder = new File(dir);
+		File[] listOfXmlPart = folder.listFiles();
+		for (File f : listOfXmlPart) {
+			if (f.getName().endsWith(".xml")) {
+				try {
+					ret.add(parsePartition(f.getAbsolutePath()));
+				} catch (XmlReaderException e) {
+					System.out.println("lol");
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return ret;
+	}
+
 	private static Partition parsePartition(String path)
 			throws XmlReaderException {
 		Document partXml = XmlReader.getDoc(path);

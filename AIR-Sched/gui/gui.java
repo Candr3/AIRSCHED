@@ -1,12 +1,16 @@
 package gui;
 
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -20,11 +24,14 @@ import src.Airsched;
 
 public class gui {
 
+	// http://zetcode.com/tutorials/javaswingtutorial/
+
 	private static JFrame getFrame() {
 		JFrame ret = new JFrame();
 		ret.setTitle("AirSched");
-		ret.setSize(640, 480);
+		ret.setSize(600, 200);
 		ret.setLocationRelativeTo(null);
+		ret.setResizable(false);
 		ret.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		return ret;
 	}
@@ -47,7 +54,7 @@ public class gui {
 	private static JPanel getPanel() {
 		JPanel ret = new JPanel();
 		ret.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		ret.setLayout(new GridLayout(2, 3, 5, 5));
+		ret.setLayout(new GridLayout(3, 2, 10, 20));
 		return ret;
 	}
 
@@ -83,8 +90,61 @@ public class gui {
 		});
 		return ret;
 	}
-	
-	
+
+	private static JFormattedTextField getInputDir() {
+		JFormattedTextField ret = new JFormattedTextField();
+		ret.setValue(Airsched.getInput_dir());
+		ret.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				JFormattedTextField e = (JFormattedTextField) arg0.getSource();
+				String value = (String) e.getValue();
+				Airsched.setInput_dir(value);
+			}
+		});
+		return ret;
+	}
+
+	private static JButton getAnalyseButton() {
+		JButton ret = new JButton("Analyse");
+		ret.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Airsched.analyse();
+			}
+		});
+		return ret;
+	}
+
+	private static JFormattedTextField getOutputDir() {
+		JFormattedTextField ret = new JFormattedTextField();
+		ret.setValue(Airsched.getOutput_dir());
+		ret.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				JFormattedTextField e = (JFormattedTextField) arg0.getSource();
+				String value = (String) e.getValue();
+				Airsched.setOutput_dir(value);
+			}
+		});
+		return ret;
+	}
+
+	private static JButton getOpenFolder() {
+		JButton ret = new JButton("Open Folder");
+		ret.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().open(
+							new File(Airsched.getOutput_dir()));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		return ret;
+	}
 
 	public static void generateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -92,7 +152,16 @@ public class gui {
 			public void run() {
 				JFrame newFrame = getFrame();
 				newFrame.setJMenuBar(getBar());
-				newFrame.add(getPanel());
+
+				JPanel panel = getPanel();
+				panel.add(getComboBox());
+				panel.add(getUtilizationThreshold());
+				panel.add(getInputDir());
+				panel.add(getAnalyseButton());
+				panel.add(getOutputDir());
+				panel.add(getOpenFolder());
+
+				newFrame.add(panel);
 				newFrame.setVisible(true);
 			}
 		});
