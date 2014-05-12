@@ -1,10 +1,12 @@
-package utils;
+package deprecated;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+//logger
+//not used
 public class Logger {
 
 	private final String folder = "logs/";
@@ -32,6 +34,6 @@ public class Logger {
 	}
 
 	public void plot() {
-		// TODO po crl
+
 	}
 }

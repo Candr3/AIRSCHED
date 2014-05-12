@@ -1,4 +1,4 @@
-package cartsInterface;
+package models;
 
 public class CartsComponent {
 

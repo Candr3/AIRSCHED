@@ -1,9 +1,10 @@
-package src;
+package models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.MathUtils;
+import deprecated.MathUtils;
+
 
 public class Partition {
 

@@ -1,4 +1,4 @@
-package cartsInterface;
+package models;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,14 @@ public class CartsModel {
 
 	public void addComponent(CartsComponent cc) {
 		this.model_components.add(cc);
+	}
+
+	public int getSystemIdle() {
+		int compExecSum = 0;
+		for (CartsComponent cc : model_components) {
+			compExecSum += cc.getExecution();
+		}
+		return model_period - compExecSum;
 	}
 
 	public String getAlgo() {

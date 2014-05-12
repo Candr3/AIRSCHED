@@ -2,9 +2,13 @@ package src;
 
 import java.io.IOException;
 
-import utils.Logger;
-import utils.MathUtils;
+import deprecated.Logger;
+import deprecated.MathUtils;
 
+import models.Partition;
+
+
+// not used
 public class CompositionalAnalyzer {
 
 	public static void PRM(Partition p) {

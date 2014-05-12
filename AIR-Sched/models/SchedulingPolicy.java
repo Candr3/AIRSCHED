@@ -1,4 +1,4 @@
-package src;
+package models;
 
 public enum SchedulingPolicy {
 	RATE_MONOTONIC, DEADLINE_MONOTONIC, EARLIEST_DEADLINE_FIRST, LEAST_LAXITY_FIRST

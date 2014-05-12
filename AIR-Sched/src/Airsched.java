@@ -5,12 +5,12 @@ import gui.gui;
 import java.io.File;
 import java.util.ArrayList;
 
-import cheddarInterface.CheddarParser;
-
-import cartsInterface.CartsInterface;
-import cartsInterface.CartsModel;
-
+import models.Partition;
+import models.SchedSystem;
 import utils.XmlPartitionParser;
+import cartsInterface.CartsInterface;
+import cartsInterface.CartsParser;
+import cheddarInterface.CheddarParser;
 
 public class Airsched {
 
@@ -27,6 +27,9 @@ public class Airsched {
 	private static int utilization_threshold;
 	private static String input_dir;
 	private static String output_dir;
+	
+	private static SchedSystem schedSystem;
+	
 
 	public static void main(String[] args) {
 
@@ -41,26 +44,26 @@ public class Airsched {
 
 	public static void analyse() {
 
-		SchedSystem ss = new SchedSystem();
+		schedSystem = new SchedSystem();
 
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
-		ArrayList<Partition> al = XmlPartitionParser.parsePartitions();
+		ArrayList<Partition> partitionList = XmlPartitionParser.parsePartitions();
 		// CompositionalAnalyzer.PRM(al.get(0));
-		for (Partition p : al) {
-			ss.addPartition(p);
+		for (Partition p : partitionList) {
+			schedSystem.addPartition(p);
 			// System.out.println(p.toString());
 		}
-		CartsInterface.PartToCartsXml(al);
+		CartsParser.PartToCartsXml(schedSystem.getPartitions());
 		CartsInterface.CartsAnalyse();
-		ss.addModels(CartsInterface.XmlExport(ss));
-		System.out.println(ss.toString());
+		schedSystem.addModels(CartsParser.XmlExport(schedSystem));
+		System.out.println(schedSystem.toString());
 		for (File f : (new File(getOutput_dir())).listFiles()) {
 			f.delete();
 		}
-		for (int i = 0; i < ss.getModels().size(); i++) {
+		for (int i = 0; i < schedSystem.getModels().size(); i++) {
 			String name = "input" + i;
-			CheddarParser.createCheddarXml(ss.getPartitions(), ss.getModel(i),
+			CheddarParser.createCheddarXml(schedSystem.getPartitions(), schedSystem.getModel(i),
 					name);
 		}
 	}

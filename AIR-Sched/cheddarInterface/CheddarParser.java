@@ -6,11 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import models.CartsModel;
+import models.Partition;
+import models.PeriodicTask;
 import src.Airsched;
-import src.Partition;
-import src.PeriodicTask;
-import cartsInterface.CartsComponent;
-import cartsInterface.CartsModel;
 
 public class CheddarParser {
 
@@ -95,7 +94,7 @@ public class CheddarParser {
 			}
 			// IDLE PARTITION
 			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
-				int sysIdle = getSystemIdle(cm);
+				int sysIdle = cm.getSystemIdle();
 				if (sysIdle > 0) {
 					id++;
 					bwriter.write("    <address_space id=\" " + id + "\">\n");
@@ -176,14 +175,6 @@ public class CheddarParser {
 		}
 
 		return true;
-	}
-
-	private static int getSystemIdle(CartsModel cm) {
-		int compExecSum = 0;
-		for (CartsComponent cc : cm.getModel_components()) {
-			compExecSum += cc.getExecution();
-		}
-		return cm.getModel_period() - compExecSum;
 	}
 
 }

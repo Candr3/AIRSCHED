@@ -15,54 +15,41 @@ public class XmlReader {
 
 	public static void printXmlFile(String filePath) {
 
-		try {
-			Document doc = getDoc(filePath);
-			System.out.println(doc.getDocumentElement().getNodeName());
+		Document doc = getDoc(filePath);
+		System.out.println(doc.getDocumentElement().getNodeName());
 
-			NodeList nl = doc.getDocumentElement().getChildNodes();
-			for (int i = 0; i < nl.getLength(); i++)
-				System.out.println(" -> " + nl.item(i).getNodeName());
+		NodeList nl = doc.getDocumentElement().getChildNodes();
+		for (int i = 0; i < nl.getLength(); i++)
+			System.out.println(" -> " + nl.item(i).getNodeName());
 
-		} catch (XmlReaderException e) {
-			e.printStackTrace();
-		}
 	}
 
-	/**
-	 * Le um ficheiro xml, e retorna um doc
-	 * 
-	 **/
-	public static Document getDoc(String filePath) throws XmlReaderException {
+	public static Document getDoc(String filePath)
+			throws ParserConfigurationException, SAXException, IOException {
 
-		try {
+		// leitura do file com merdas do java
+		// http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-			// leitura do file com merdas do java
-			// http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		File f = new File(filePath);
+		Document doc = dBuilder.parse(f);
+		// Document doc = dBuilder.parse(ClassLoader
+		// .getSystemResourceAsStream(filePath));
 
-			File f = new File(filePath);
-			Document doc = dBuilder.parse(f);
-			// Document doc = dBuilder.parse(ClassLoader
-			// .getSystemResourceAsStream(filePath));
+		// normalizar
+		// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+		doc.getDocumentElement().normalize();
 
-			// normalizar
-			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-			doc.getDocumentElement().normalize();
+		// mostrar versao
+		// System.out.println("version\n" + doc.getXmlVersion()
+		// + "\nencoding\n" + doc.getXmlEncoding());
 
-			// mostrar versao
-			// System.out.println("version\n" + doc.getXmlVersion()
-			// + "\nencoding\n" + doc.getXmlEncoding());
+		// mostar root
+		// System.out.println("root\n"
+		// + doc.getDocumentElement().getNodeName());
+		return doc;
 
-			// mostar root
-			// System.out.println("root\n"
-			// + doc.getDocumentElement().getNodeName());
-			return doc;
-
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
-			throw new XmlReaderException("Erro: no parsing do ficheiro xml.");
-		}
 	}
+
 }

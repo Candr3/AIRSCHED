@@ -1,5 +1,6 @@
-package utils;
+package deprecated;
 
+// not used
 public class MathUtils {
 
 	public static int upperBoundDivision(int dividendo, int divisor) {

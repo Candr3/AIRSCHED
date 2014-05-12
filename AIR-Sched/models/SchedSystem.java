@@ -1,9 +1,9 @@
-package src;
+package models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cartsInterface.CartsModel;
+
 
 public class SchedSystem {
 

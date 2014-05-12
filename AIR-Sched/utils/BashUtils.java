@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 public class BashUtils {
 	// private static final String[] BASH_CMD = { "/bin/bash", "-c" };
 
+	// receives a command to be executed in the terminal and outpus the result
 	public static String cmdInterpreter(String[] arg) {
 
 		try {

@@ -2,11 +2,15 @@ package utils;
 
 import java.util.List;
 
-import src.Partition;
-import src.PeriodicTask;
+import deprecated.MathUtils;
+
+import models.Partition;
+import models.PeriodicTask;
+
 
 public class PartitionUtils {
 
+	// used to bound the period analysis, larger periods may induce a crash
 	private static final int MAX_PERIOD = 200;
 
 	public static int getPartsHp(List<Partition> lop) {

@@ -3,14 +3,15 @@ package utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import models.Partition;
+import models.PeriodicTask;
+import models.SchedulingPolicy;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import src.Partition;
-import src.PeriodicTask;
-import src.SchedulingPolicy;
 
 public class XmlPartitionParser {
 
@@ -24,7 +25,7 @@ public class XmlPartitionParser {
 			if (f.getName().endsWith(".xml")) {
 				try {
 					ret.add(parsePartition(f.getAbsolutePath()));
-				} catch (XmlReaderException e) {
+				} catch (Exception e) {
 					System.out.println("lol");
 					e.printStackTrace();
 				}
@@ -42,7 +43,7 @@ public class XmlPartitionParser {
 			if (f.getName().endsWith(".xml")) {
 				try {
 					ret.add(parsePartition(f.getAbsolutePath()));
-				} catch (XmlReaderException e) {
+				} catch (Exception e) {
 					System.out.println("lol");
 					e.printStackTrace();
 				}
@@ -52,8 +53,7 @@ public class XmlPartitionParser {
 		return ret;
 	}
 
-	private static Partition parsePartition(String path)
-			throws XmlReaderException {
+	private static Partition parsePartition(String path) {
 		Document partXml = XmlReader.getDoc(path);
 		Node partNod = partXml.getDocumentElement();
 		Element partElem = (Element) partNod;
