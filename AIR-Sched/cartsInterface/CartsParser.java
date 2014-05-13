@@ -1,11 +1,13 @@
 package cartsInterface;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -24,11 +26,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import src.Airsched;
 import utils.PartitionUtils;
 import utils.XmlReader;
-import utils.XmlReaderException;
 
 public class CartsParser {
 
@@ -187,11 +189,11 @@ public class CartsParser {
 	public static LinkedList<CartsModel> XmlExport(SchedSystem ss) {
 
 		Document doc;
+
 		try {
 			doc = XmlReader.getDoc("carts/xml/output.xml");
-		} catch (XmlReaderException e) {
-			// TODO
-			e.printStackTrace();
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
+			e1.printStackTrace();
 			return null;
 		}
 

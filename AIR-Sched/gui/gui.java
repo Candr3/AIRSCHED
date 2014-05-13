@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -25,6 +26,16 @@ import src.Airsched;
 public class gui {
 
 	// http://zetcode.com/tutorials/javaswingtutorial/
+
+	private static final int N_COLS = 2;
+	private static final int N_ROWS = 4;
+
+	private static final int COL_SIZE = 20;
+	private static final int ROW_SIZE = 10;
+
+	private static final int BORDER_SIZE = 10;
+
+	private static JPanel panel;
 
 	private static JFrame getFrame() {
 		JFrame ret = new JFrame();
@@ -53,8 +64,9 @@ public class gui {
 
 	private static JPanel getPanel() {
 		JPanel ret = new JPanel();
-		ret.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		ret.setLayout(new GridLayout(3, 2, 10, 20));
+		ret.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE,
+				BORDER_SIZE, BORDER_SIZE));
+		ret.setLayout(new GridLayout(N_ROWS, N_COLS, ROW_SIZE, COL_SIZE));
 		return ret;
 	}
 
@@ -105,12 +117,18 @@ public class gui {
 		return ret;
 	}
 
-	private static JButton getAnalyseButton() {
-		JButton ret = new JButton("Analyse");
+	private static JButton getInputOpenFolder() {
+		JButton ret = new JButton("Open Folder");
 		ret.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Airsched.analyse();
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop()
+							.open(new File(Airsched.getInput_dir()));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					throwError("Invalid directory!");
+				}
 			}
 		});
 		return ret;
@@ -130,8 +148,8 @@ public class gui {
 		return ret;
 	}
 
-	private static JButton getOpenFolder() {
-		JButton ret = new JButton("Open Folder");
+	private static JButton getOutputOpenFolder() {
+		final JButton ret = new JButton("Open Folder");
 		ret.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,10 +158,27 @@ public class gui {
 							new File(Airsched.getOutput_dir()));
 				} catch (IOException e1) {
 					e1.printStackTrace();
+					throwError("Invalid directory!");
 				}
 			}
 		});
 		return ret;
+	}
+
+	private static JButton getAnalyseButton() {
+		JButton ret = new JButton("Analyse");
+		ret.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Airsched.analyse();
+			}
+		});
+		return ret;
+	}
+
+	private static void throwError(final String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	public static void generateGUI() {
@@ -153,13 +188,14 @@ public class gui {
 				JFrame newFrame = getFrame();
 				newFrame.setJMenuBar(getBar());
 
-				JPanel panel = getPanel();
+				panel = getPanel();
 				panel.add(getComboBox());
 				panel.add(getUtilizationThreshold());
 				panel.add(getInputDir());
-				panel.add(getAnalyseButton());
+				panel.add(getInputOpenFolder());
 				panel.add(getOutputDir());
-				panel.add(getOpenFolder());
+				panel.add(getOutputOpenFolder());
+				panel.add(getAnalyseButton());
 
 				newFrame.add(panel);
 				newFrame.setVisible(true);

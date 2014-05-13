@@ -14,14 +14,18 @@ import org.xml.sax.SAXException;
 public class XmlReader {
 
 	public static void printXmlFile(String filePath) {
+		try {
 
-		Document doc = getDoc(filePath);
-		System.out.println(doc.getDocumentElement().getNodeName());
+			Document doc = getDoc(filePath);
+			System.out.println(doc.getDocumentElement().getNodeName());
+			NodeList nl = doc.getDocumentElement().getChildNodes();
+			for (int i = 0; i < nl.getLength(); i++)
+				System.out.println(" -> " + nl.item(i).getNodeName());
 
-		NodeList nl = doc.getDocumentElement().getChildNodes();
-		for (int i = 0; i < nl.getLength(); i++)
-			System.out.println(" -> " + nl.item(i).getNodeName());
-
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			System.out.println("print fail");
+			e.printStackTrace();
+		}
 	}
 
 	public static Document getDoc(String filePath)

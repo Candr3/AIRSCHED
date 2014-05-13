@@ -1,7 +1,10 @@
 package utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import models.Partition;
 import models.PeriodicTask;
@@ -11,7 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
+import org.xml.sax.SAXException;
 
 public class XmlPartitionParser {
 
@@ -53,7 +56,8 @@ public class XmlPartitionParser {
 		return ret;
 	}
 
-	private static Partition parsePartition(String path) {
+	private static Partition parsePartition(String path)
+			throws ParserConfigurationException, SAXException, IOException {
 		Document partXml = XmlReader.getDoc(path);
 		Node partNod = partXml.getDocumentElement();
 		Element partElem = (Element) partNod;
