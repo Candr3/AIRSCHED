@@ -1,0 +1,68 @@
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:2:9: No DTD defined for this document, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:2:9)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:4:16: [VC] No attribute allowed for element core_unit, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:4:16)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:22:20: [VC] No attribute allowed for element address_space, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:22:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:42:20: [VC] No attribute allowed for element address_space, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:42:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:64:26: [VC] No attribute allowed for element mono_core_processor, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:64:26)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:70:13: [VC] No attribute allowed for element core, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:70:13)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:74:20: [VC] No attribute allowed for element periodic_task, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:74:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:93:20: [VC] No attribute allowed for element periodic_task, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:93:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:112:20: [VC] No attribute allowed for element periodic_task, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:112:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:131:20: [VC] No attribute allowed for element periodic_task, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:131:20)
+Xml parser non fatal error (/home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:150:20: [VC] No attribute allowed for element periodic_task, at /home/andre/Git/AIRSCHED/AIR-Sched/cheddarFiles/xml/input16.xml:150:20)
+
+
+Scheduling feasibility, Processor processor1 : 
+
+INVALID_SCHEDULERscheduler-hierarchical.adb:114
+
+
+Scheduling simulation, Processor processor1 : 
+
+- Number of preemptions :  1
+
+
+
+Scheduling simulation, Processor processor1 : 
+
+- Number of context switches :  12
+
+
+
+Scheduling simulation, Processor processor1 : 
+
+- Task response time computed from simulation : 
+    part1_tarefa_dois => 15/worst  12/best 13.50000/average 
+    part1_tarefa_um => 9/worst  0/best 4.00000/average 
+    part2_tarefa_dois => 14/worst  0/best 6.00000/average 
+    part2_tarefa_tres => 11/worst  3/best 6.66667/average 
+    part2_tarefa_um => 8/worst  2/best 4.00000/average 
+- No deadline missed in the computed scheduling : the task set is schedulable if you computed the scheduling on the hyperperiod.
+
+
+
+
+Set priorities, Processor processor1 : 
+
+Set priorities according to Rate Monotonic
+- Updated priorities :
+    part1_tarefa_dois => 1
+    part1_tarefa_um => 2
+    part2_tarefa_dois => 3
+    part2_tarefa_tres => 4
+    part2_tarefa_um => 5
+
+
+
+
+
+Set priorities, Processor processor1 : 
+
+Set priorities according to Deadline Monotonic
+- Updated priorities :
+    part1_tarefa_dois => 1
+    part1_tarefa_um => 2
+    part2_tarefa_dois => 3
+    part2_tarefa_tres => 4
+    part2_tarefa_um => 5
+
+
