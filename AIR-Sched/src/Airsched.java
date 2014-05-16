@@ -10,6 +10,7 @@ import models.SchedSystem;
 import utils.XmlPartitionParser;
 import cartsInterface.CartsInterface;
 import cartsInterface.CartsParser;
+import cheddarInterface.CheddarInterface;
 import cheddarInterface.CheddarParser;
 
 public class Airsched {
@@ -27,9 +28,8 @@ public class Airsched {
 	private static int utilization_threshold;
 	private static String input_dir;
 	private static String output_dir;
-	
+
 	private static SchedSystem schedSystem;
-	
 
 	public static void main(String[] args) {
 
@@ -48,7 +48,8 @@ public class Airsched {
 
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
-		ArrayList<Partition> partitionList = XmlPartitionParser.parsePartitions();
+		ArrayList<Partition> partitionList = XmlPartitionParser
+				.parsePartitions();
 		// CompositionalAnalyzer.PRM(al.get(0));
 		for (Partition p : partitionList) {
 			schedSystem.addPartition(p);
@@ -63,9 +64,11 @@ public class Airsched {
 		}
 		for (int i = 0; i < schedSystem.getModels().size(); i++) {
 			String name = "input" + i;
-			CheddarParser.createCheddarXml(schedSystem.getPartitions(), schedSystem.getModel(i),
-					name);
+			CheddarParser.createCheddarXml(schedSystem.getPartitions(),
+					schedSystem.getModel(i), name);
 		}
+		CheddarInterface.analyse();
+		
 	}
 
 	public static int getPartitionPaddingMode() {
