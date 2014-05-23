@@ -7,7 +7,6 @@ import deprecated.MathUtils;
 import models.Partition;
 import models.PeriodicTask;
 
-
 public class PartitionUtils {
 
 	// used to bound the period analysis, larger periods may induce a crash
@@ -44,6 +43,14 @@ public class PartitionUtils {
 			}
 		}
 		return ret;
+	}
+
+	public static int getCriticalityByName(String name, List<Partition> lop) {
+		for (Partition p : lop) {
+			if (p.getName().equals(name))
+				return p.getCriticality();
+		}
+		return -1;
 	}
 
 }

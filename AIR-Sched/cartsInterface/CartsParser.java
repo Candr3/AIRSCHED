@@ -295,11 +295,12 @@ public class CartsParser {
 
 						CartsComponent new_comp = new CartsComponent(
 								component_name[j], algo,
+								PartitionUtils.getCriticalityByName(
+										component_name[j], ss.getPartitions()),
 								component_model_period,
 								component_model_execution,
 								component_model_bandwith);
 
-						// System.out.println("tou aki");
 						cm.addComponent(new_comp);
 					}
 
@@ -312,5 +313,4 @@ public class CartsParser {
 		System.out.println(ret.size());
 		return ret;
 	}
-
 }

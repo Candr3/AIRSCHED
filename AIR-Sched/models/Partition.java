@@ -5,17 +5,19 @@ import java.util.List;
 
 import deprecated.MathUtils;
 
-
 public class Partition {
 
 	private String name;
 	private int id;
+	private int criticality;
 	private ArrayList<PeriodicTask> workload;
 	private SchedulingPolicy sched_pol;
 
-	public Partition(String name, int id, SchedulingPolicy sched_pol) {
+	public Partition(String name, int id, int criticality,
+			SchedulingPolicy sched_pol) {
 		this.name = name;
 		this.id = id;
+		this.criticality = criticality;
 		this.workload = new ArrayList<PeriodicTask>();
 		this.sched_pol = sched_pol;
 	}
@@ -64,6 +66,10 @@ public class Partition {
 		return id;
 	}
 
+	public int getCriticality() {
+		return criticality;
+	}
+
 	public List<PeriodicTask> getWorkload() {
 		return workload;
 	}
@@ -77,6 +83,7 @@ public class Partition {
 		str.append("***************\n");
 		str.append("nome : " + name + "\n");
 		str.append("id   : " + id + "\n");
+		str.append("crit : " + criticality + "\n");
 		str.append("pol  : " + sched_pol + "\n");
 		str.append("tasks:\n");
 		for (PeriodicTask pt : workload) {

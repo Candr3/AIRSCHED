@@ -3,8 +3,6 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class SchedSystem {
 
 	private ArrayList<Partition> lop;
@@ -21,6 +19,16 @@ public class SchedSystem {
 
 	public void addModels(List<CartsModel> toadd) {
 		locm.addAll(toadd);
+	}
+
+	public void addBestModel(List<CartsModel> toadd) {
+		for (CartsModel cm : toadd) {
+			if (locm.isEmpty()
+					|| locm.get(0).getModel_bandwith() > cm.getModel_bandwith()) {
+				locm.clear();
+				locm.add(cm);
+			}
+		}
 	}
 
 	public int numberOfPartitions() {

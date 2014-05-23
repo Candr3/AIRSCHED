@@ -68,6 +68,10 @@ public class XmlPartitionParser {
 		int id = Integer.parseInt(partElem.getElementsByTagName("partition_id")
 				.item(0).getTextContent());
 
+		int criticality = Integer.parseInt(partElem
+				.getElementsByTagName("partition_criticality").item(0)
+				.getTextContent());
+
 		SchedulingPolicy sp = SchedulingPolicy.valueOf(partElem
 				.getElementsByTagName("partition_sched_policy").item(0)
 				.getTextContent());
@@ -75,7 +79,7 @@ public class XmlPartitionParser {
 		// System.out.println("n: " + name + "\nid: " + id + "\nsp: " + sp +
 		// "\n");
 
-		Partition ret = new Partition(name, id, sp);
+		Partition ret = new Partition(name, id, criticality, sp);
 
 		NodeList nl = partXml.getElementsByTagName("task");
 

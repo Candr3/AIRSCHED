@@ -10,7 +10,6 @@ import models.SchedSystem;
 import utils.XmlPartitionParser;
 import cartsInterface.CartsInterface;
 import cartsInterface.CartsParser;
-import cheddarInterface.CheddarInterface;
 import cheddarInterface.CheddarParser;
 
 public class Airsched {
@@ -57,7 +56,8 @@ public class Airsched {
 		}
 		CartsParser.PartToCartsXml(schedSystem.getPartitions());
 		CartsInterface.CartsAnalyse();
-		schedSystem.addModels(CartsParser.XmlExport(schedSystem));
+		// schedSystem.addModels(CartsParser.XmlExport(schedSystem));
+		schedSystem.addBestModel(CartsParser.XmlExport(schedSystem));
 		System.out.println(schedSystem.toString());
 		for (File f : (new File(getOutput_dir())).listFiles()) {
 			f.delete();
@@ -67,8 +67,8 @@ public class Airsched {
 			CheddarParser.createCheddarXml(schedSystem.getPartitions(),
 					schedSystem.getModel(i), name);
 		}
-		CheddarInterface.analyse();
-		
+		// CheddarInterface.analyse();
+
 	}
 
 	public static int getPartitionPaddingMode() {
