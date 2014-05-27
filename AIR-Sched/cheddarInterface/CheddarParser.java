@@ -6,6 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import comparators.PartitionCriticalityFirstComparator;
+import comparators.PartitionLargerPeriodFirstComparator;
+import comparators.PartitionSmallerPeriodFirstComparator;
+
 import models.CartsModel;
 import models.Partition;
 import models.PeriodicTask;
@@ -66,6 +70,23 @@ public class CheddarParser {
 			bwriter.write("    </core_unit>\n");
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
+
+			// sorts components
+			switch (Airsched.getOrder()) {
+			case (Airsched.CRITICALITY_FIRST):
+				cm.sort(new PartitionCriticalityFirstComparator());
+				break;
+			case (Airsched.LARGER_FIRST):
+				cm.sort(new PartitionLargerPeriodFirstComparator());
+				break;
+			case (Airsched.SMALLER_FIRST):
+				cm.sort(new PartitionSmallerPeriodFirstComparator());
+				break;
+			default:
+				System.out.println("deu merda!");
+				break;
+			}
+
 			for (int i = 0; i < lop.size(); i++) {
 				id++;
 				bwriter.write("    <address_space id=\" " + id + "\">\n");
@@ -176,5 +197,4 @@ public class CheddarParser {
 
 		return true;
 	}
-
 }

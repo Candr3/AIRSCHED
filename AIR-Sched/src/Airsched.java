@@ -18,12 +18,17 @@ public class Airsched {
 	public static final int DUMMY_PARTITION_PADDING = 1;
 	public static final int PARAMETRIC_PARTITION_PADDING = 2;
 
+	public static final int CRITICALITY_FIRST = 0;
+	public static final int LARGER_FIRST = 1;
+	public static final int SMALLER_FIRST = 2;
+
 	public static final int UTILIZATION_THRESHOLD = 100;
 
 	public static final String DEFAULT_INPUT_DIR = "partitions";
 	public static final String DEFAULT_OUTPUT_DIR = "cheddarFiles/xml";
 
 	private static int partition_padding_mode;
+	private static int order;
 	private static int utilization_threshold;
 	private static String input_dir;
 	private static String output_dir;
@@ -33,6 +38,7 @@ public class Airsched {
 	public static void main(String[] args) {
 
 		partition_padding_mode = NO_PARTITION_PADDING;
+		order = CRITICALITY_FIRST;
 		utilization_threshold = UTILIZATION_THRESHOLD;
 		input_dir = DEFAULT_INPUT_DIR;
 		output_dir = DEFAULT_OUTPUT_DIR;
@@ -81,6 +87,16 @@ public class Airsched {
 		}
 	}
 
+	public static int getOrder() {
+		return order;
+	}
+
+	public static void setOrder(int i) {
+		if (i >= 0 && i <= 2) {
+			order = i;
+		}
+	}
+
 	public static int getUtilizationThreshold() {
 		return utilization_threshold;
 	}
@@ -91,7 +107,7 @@ public class Airsched {
 		}
 	}
 
-	public static String getInput_dir() {
+	public static Strinlopg getInput_dir() {
 		return input_dir;
 	}
 

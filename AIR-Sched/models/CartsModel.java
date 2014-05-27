@@ -1,6 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CartsModel {
 
@@ -49,6 +51,10 @@ public class CartsModel {
 
 	public ArrayList<CartsComponent> getModel_components() {
 		return model_components;
+	}
+
+	public void sort(Comparator<CartsComponent> comp) {
+		Collections.sort(model_components, comp);
 	}
 
 	public String toString() {
