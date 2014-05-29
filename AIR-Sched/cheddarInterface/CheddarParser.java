@@ -10,6 +10,7 @@ import comparators.PartitionCriticalityFirstComparator;
 import comparators.PartitionLargerPeriodFirstComparator;
 import comparators.PartitionSmallerPeriodFirstComparator;
 
+import models.CartsComponent;
 import models.CartsModel;
 import models.Partition;
 import models.PeriodicTask;
@@ -71,6 +72,16 @@ public class CheddarParser {
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
 
+			// dummy part
+			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
+				int sysIdle = cm.getSystemIdle();
+				CartsComponent dummy = new CartsComponent("IDLE",
+						"RATE_MONOTONIC_PROTOCOL", 0, sysIdle, sysIdle, 0.0);
+				cm.addComponent(dummy);
+			}
+			// parametric
+			//TODO pocrl
+
 			// sorts components
 			switch (Airsched.getOrder()) {
 			case (Airsched.CRITICALITY_FIRST):
@@ -113,35 +124,36 @@ public class CheddarParser {
 				bwriter.write("      </scheduling>\n");
 				bwriter.write("    </address_space>\n");
 			}
-			// IDLE PARTITION
-			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
-				int sysIdle = cm.getSystemIdle();
-				if (sysIdle > 0) {
-					id++;
-					bwriter.write("    <address_space id=\" " + id + "\">\n");
-					bwriter.write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n");
-					bwriter.write("      <name>SYSTEM_IDLE</name>\n");
-					bwriter.write("      <cpu_name>processor1</cpu_name>\n");
-					bwriter.write("      <text_memory_size>0</text_memory_size>\n");
-					bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
-					bwriter.write("      <data_memory_size>0</data_memory_size>\n");
-					bwriter.write("      <heap_memory_size>0</heap_memory_size>\n");
-					bwriter.write("      <scheduling>\n");
-					bwriter.write("        <scheduling_parameters>\n");
-					bwriter.write("          <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>\n");
-					bwriter.write("          <quantum>" + sysIdle
-							+ "</quantum>\n");
-					bwriter.write("          <preemptive_type>PREEMPTIVE</preemptive_type>\n");
-					bwriter.write("          <capacity>0</capacity>\n");
-					bwriter.write("          <period>0</period>\n");
-					bwriter.write("          <priority>0</priority>\n");
-					bwriter.write("          <start_time>0</start_time>\n");
-					bwriter.write("        </scheduling_parameters>\n");
-					bwriter.write("      </scheduling>\n");
-					bwriter.write("    </address_space>\n");
-				}
-			}
-			// END OF DUMMY PARTITION
+			/*
+			 * // IDLE PARTITION if (Airsched.getPartitionPaddingMode() ==
+			 * Airsched.DUMMY_PARTITION_PADDING) { int sysIdle =
+			 * cm.getSystemIdle(); if (sysIdle > 0) { id++;
+			 * bwriter.write("    <address_space id=\" " + id + "\">\n");
+			 * bwriter
+			 * .write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n"
+			 * ); bwriter.write("      <name>SYSTEM_IDLE</name>\n");
+			 * bwriter.write("      <cpu_name>processor1</cpu_name>\n");
+			 * bwriter.write("      <text_memory_size>0</text_memory_size>\n");
+			 * bwriter
+			 * .write("      <stack_memory_size>0</stack_memory_size>\n");
+			 * bwriter.write("      <data_memory_size>0</data_memory_size>\n");
+			 * bwriter.write("      <heap_memory_size>0</heap_memory_size>\n");
+			 * bwriter.write("      <scheduling>\n");
+			 * bwriter.write("        <scheduling_parameters>\n");
+			 * bwriter.write(
+			 * "          <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>\n"
+			 * ); bwriter.write("          <quantum>" + sysIdle +
+			 * "</quantum>\n"); bwriter.write(
+			 * "          <preemptive_type>PREEMPTIVE</preemptive_type>\n");
+			 * bwriter.write("          <capacity>0</capacity>\n");
+			 * bwriter.write("          <period>0</period>\n");
+			 * bwriter.write("          <priority>0</priority>\n");
+			 * bwriter.write("          <start_time>0</start_time>\n");
+			 * bwriter.write("        </scheduling_parameters>\n");
+			 * bwriter.write("      </scheduling>\n");
+			 * bwriter.write("    </address_space>\n"); } } // END OF DUMMY
+			 * PARTITION
+			 */
 			bwriter.write("  </address_spaces>\n");
 			bwriter.write("  <processors>\n");
 			id++;

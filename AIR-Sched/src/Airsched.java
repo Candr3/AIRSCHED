@@ -109,7 +109,7 @@ public class Airsched {
 	}
 
 	public static void setUtilizationThreshold(int value) {
-		if (value >= 50 && value <= 100) {
+		if (value >= 0 && value <= 100) {
 			utilization_threshold = value;
 		}
 	}
