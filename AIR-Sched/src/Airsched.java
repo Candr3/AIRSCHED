@@ -30,6 +30,7 @@ public class Airsched {
 	private static int partition_padding_mode;
 	private static int order;
 	private static int utilization_threshold;
+	private static boolean bestModel;
 	private static String input_dir;
 	private static String output_dir;
 
@@ -40,6 +41,7 @@ public class Airsched {
 		partition_padding_mode = NO_PARTITION_PADDING;
 		order = CRITICALITY_FIRST;
 		utilization_threshold = UTILIZATION_THRESHOLD;
+		bestModel = false;
 		input_dir = DEFAULT_INPUT_DIR;
 		output_dir = DEFAULT_OUTPUT_DIR;
 
@@ -62,8 +64,13 @@ public class Airsched {
 		}
 		CartsParser.PartToCartsXml(schedSystem.getPartitions());
 		CartsInterface.CartsAnalyse();
-		// schedSystem.addModels(CartsParser.XmlExport(schedSystem));
-		schedSystem.addBestModel(CartsParser.XmlExport(schedSystem));
+
+		if (!bestModel) {
+			schedSystem.addModels(CartsParser.XmlExport(schedSystem));
+		} else {
+			schedSystem.addBestModel(CartsParser.XmlExport(schedSystem));
+		}
+
 		System.out.println(schedSystem.toString());
 		for (File f : (new File(getOutput_dir())).listFiles()) {
 			f.delete();
@@ -107,7 +114,15 @@ public class Airsched {
 		}
 	}
 
-	public static Strinlopg getInput_dir() {
+	public static void setBestModel(boolean b) {
+		bestModel = b;
+	}
+
+	public static boolean getBestModel() {
+		return bestModel;
+	}
+
+	public static String getInput_dir() {
 		return input_dir;
 	}
 

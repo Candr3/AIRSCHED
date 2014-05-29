@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -28,19 +29,22 @@ public class gui {
 	// http://zetcode.com/tutorials/javaswingtutorial/
 
 	private static final int N_COLS = 2;
-	private static final int N_ROWS = 4;
+	private static final int N_ROWS = 5;
 
 	private static final int COL_SIZE = 20;
 	private static final int ROW_SIZE = 10;
 
 	private static final int BORDER_SIZE = 10;
 
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 300;
+
 	private static JPanel panel;
 
 	private static JFrame getFrame() {
 		JFrame ret = new JFrame();
 		ret.setTitle("AirSched");
-		ret.setSize(600, 200);
+		ret.setSize(WIDTH, HEIGHT);
 		ret.setLocationRelativeTo(null);
 		ret.setResizable(false);
 		ret.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,9 +74,9 @@ public class gui {
 		return ret;
 	}
 
-	private static JComboBox<String> getComboBox() {
-		String[] options = { "no padding", "empty partition",
-				"parametric padding" };
+	private static JComboBox<String> getPaddingComboBox() {
+		String[] options = { "No padding", "Empty partition",
+				"Parametric padding" };
 		JComboBox<String> ret = new JComboBox<String>(options);
 		ret.setSelectedIndex(0);
 		ret.addActionListener(new ActionListener() {
@@ -89,6 +93,24 @@ public class gui {
 		return ret;
 	}
 
+	private static JComboBox<String> getOrderComboBox() {
+		String[] opt = { "Criticality first", "Larger first", "Smaller first" };
+		JComboBox<String> ret = new JComboBox<String>(opt);
+		ret.setSelectedIndex(0);
+		ret.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> cb = (JComboBox<String>) e.getSource();
+				int selectedIndex = cb.getSelectedIndex();
+				if (selectedIndex != -1) {
+					Airsched.setOrder(selectedIndex);
+				}
+			}
+		});
+		return ret;
+	}
+
 	private static JFormattedTextField getUtilizationThreshold() {
 		JFormattedTextField ret = new JFormattedTextField();
 		ret.setValue(100);
@@ -98,6 +120,35 @@ public class gui {
 				JFormattedTextField e = (JFormattedTextField) arg0.getSource();
 				int value = (int) e.getValue();
 				Airsched.setUtilizationThreshold(value);
+			}
+		});
+		return ret;
+	}
+
+	/*
+	 * private static JPanel getBestModelCheckBox() { JPanel ret = new JPanel();
+	 * ret.add(new JTextArea("Best model only?")); JCheckBox cb = new
+	 * JCheckBox(); cb.addActionListener(new ActionListener() {
+	 * 
+	 * @Override public void actionPerformed(ActionEvent e) { JCheckBox source =
+	 * (JCheckBox) e.getSource(); boolean state = source.isSelected(); if
+	 * (state) { Airsched.setBestModel(true); } else {
+	 * Airsched.setBestModel(false); } } }); ret.add(cb); return ret; }
+	 */
+
+	private static JCheckBox getBestModelCheckBox() {
+		JCheckBox ret = new JCheckBox("Best model only?", true);
+		ret.setSelected(Airsched.getBestModel());
+		ret.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JCheckBox source = (JCheckBox) e.getSource();
+				boolean state = source.isSelected();
+				if (state) {
+					Airsched.setBestModel(true);
+				} else {
+					Airsched.setBestModel(false);
+				}
 			}
 		});
 		return ret;
@@ -181,6 +232,10 @@ public class gui {
 				JOptionPane.ERROR_MESSAGE);
 	}
 
+	// private static JPanel getDummy() {
+	// return new JPanel();
+	// }
+
 	public static void generateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -189,8 +244,10 @@ public class gui {
 				newFrame.setJMenuBar(getBar());
 
 				panel = getPanel();
-				panel.add(getComboBox());
+				panel.add(getPaddingComboBox());
+				panel.add(getOrderComboBox());
 				panel.add(getUtilizationThreshold());
+				panel.add(getBestModelCheckBox());
 				panel.add(getInputDir());
 				panel.add(getInputOpenFolder());
 				panel.add(getOutputDir());
