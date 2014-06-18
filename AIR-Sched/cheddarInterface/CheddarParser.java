@@ -71,7 +71,7 @@ public class CheddarParser {
 			bwriter.write("    </core_unit>\n");
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
-
+			
 			// dummy part
 			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
 				int sysIdle = cm.getSystemIdle();

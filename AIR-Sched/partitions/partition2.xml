@@ -2,7 +2,7 @@
 <partition>
 	<partition_name>part2</partition_name>
 	<partition_id>30</partition_id>
-	<partition_criticality>2</partition_criticality>
+	<partition_criticality>5</partition_criticality>
 	<partition_period></partition_period>
 	<partition_duration>300</partition_duration>
 	<partition_sched_policy>RATE_MONOTONIC</partition_sched_policy>

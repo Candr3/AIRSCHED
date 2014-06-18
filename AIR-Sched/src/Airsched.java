@@ -29,6 +29,8 @@ public class Airsched {
 
 	private static int partition_padding_mode;
 	private static int order;
+	private static int min_period;
+	private static int max_period;
 	private static int utilization_threshold;
 	private static boolean bestModel;
 	private static String input_dir;
@@ -40,6 +42,8 @@ public class Airsched {
 
 		partition_padding_mode = NO_PARTITION_PADDING;
 		order = CRITICALITY_FIRST;
+		min_period = 10;
+		max_period = 100;
 		utilization_threshold = UTILIZATION_THRESHOLD;
 		bestModel = false;
 		input_dir = DEFAULT_INPUT_DIR;
@@ -136,6 +140,32 @@ public class Airsched {
 
 	public static void setOutput_dir(String new_output_dir) {
 		output_dir = new_output_dir;
+	}
+
+	public static int getMin_period() {
+		return min_period;
+	}
+
+	public static int setMin_period(int new_min_period) {
+		if (new_min_period > 0 && new_min_period <= max_period) {
+			min_period = new_min_period;
+			return min_period;
+		} else {
+			return -1;
+		}
+	}
+
+	public static int getMax_period() {
+		return max_period;
+	}
+
+	public static int setMax_period(int new_max_period) {
+		if (new_max_period > 0 && new_max_period >= min_period) {
+			max_period = new_max_period;
+			return max_period;
+		} else {
+			return -1;
+		}
 	}
 
 }

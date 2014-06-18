@@ -15,10 +15,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -28,16 +28,16 @@ public class gui {
 
 	// http://zetcode.com/tutorials/javaswingtutorial/
 
-	private static final int N_COLS = 2;
-	private static final int N_ROWS = 5;
+	private static final int N_COLS = 3;
+	private static final int N_ROWS = 6;
 
-	private static final int COL_SIZE = 20;
-	private static final int ROW_SIZE = 10;
+	private static final int COL_GAP = 20;
+	private static final int ROW_GAP = 10;
 
 	private static final int BORDER_SIZE = 10;
 
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 300;
+	private static final int WIDTH = 150 * N_COLS;
+	private static final int HEIGHT = 60 * N_ROWS;
 
 	private static JPanel panel;
 
@@ -70,7 +70,7 @@ public class gui {
 		JPanel ret = new JPanel();
 		ret.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE,
 				BORDER_SIZE, BORDER_SIZE));
-		ret.setLayout(new GridLayout(N_ROWS, N_COLS, ROW_SIZE, COL_SIZE));
+		ret.setLayout(new GridLayout(N_ROWS, N_COLS, ROW_GAP, COL_GAP));
 		return ret;
 	}
 
@@ -137,7 +137,7 @@ public class gui {
 	 */
 
 	private static JCheckBox getBestModelCheckBox() {
-		JCheckBox ret = new JCheckBox("Best model only?", true);
+		JCheckBox ret = new JCheckBox("Best model ?", true);
 		ret.setSelected(Airsched.getBestModel());
 		ret.addActionListener(new ActionListener() {
 			@Override
@@ -178,7 +178,8 @@ public class gui {
 							.open(new File(Airsched.getInput_dir()));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					throwError("Invalid directory!");
+					// throwError("Invalid directory!");
+					System.out.println("Invalid directory!");
 				}
 			}
 		});
@@ -209,7 +210,8 @@ public class gui {
 							new File(Airsched.getOutput_dir()));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					throwError("Invalid directory!");
+					// throwError("Invalid directory!");
+					System.out.println("Invalid directory!");
 				}
 			}
 		});
@@ -227,14 +229,42 @@ public class gui {
 		return ret;
 	}
 
-	private static void throwError(final String msg) {
-		JOptionPane.showMessageDialog(null, msg, "Error",
-				JOptionPane.ERROR_MESSAGE);
-	}
-
+	/*
+	 * private static void throwError(final String msg) {
+	 * JOptionPane.showMessageDialog(null, msg, "Error",
+	 * JOptionPane.ERROR_MESSAGE); }
+	 */
 	// private static JPanel getDummy() {
 	// return new JPanel();
 	// }
+
+	private static JFormattedTextField getMinPeriod() {
+		JFormattedTextField ret = new JFormattedTextField();
+		ret.setValue(String.valueOf(Airsched.getMin_period()));
+		ret.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				JFormattedTextField e = (JFormattedTextField) arg0.getSource();
+				String value = (String) e.getValue();
+				Airsched.setMin_period(Integer.parseInt(value));
+			}
+		});
+		return ret;
+	}
+
+	private static JFormattedTextField getMaxPeriod() {
+		JFormattedTextField ret = new JFormattedTextField();
+		ret.setValue(String.valueOf(Airsched.getMax_period()));
+		ret.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				JFormattedTextField e = (JFormattedTextField) arg0.getSource();
+				String value = (String) e.getValue();
+				Airsched.setMax_period(Integer.parseInt(value));
+			}
+		});
+		return ret;
+	}
 
 	public static void generateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -244,15 +274,30 @@ public class gui {
 				newFrame.setJMenuBar(getBar());
 
 				panel = getPanel();
+				// row 1
+				panel.add(new JLabel("Padding/Order:"));
 				panel.add(getPaddingComboBox());
 				panel.add(getOrderComboBox());
+				// row 2
+				panel.add(new JLabel("Period min/max:"));
+				panel.add(getMinPeriod());
+				panel.add(getMaxPeriod());
+				// row 3
+				panel.add(new JLabel("Processor cap:"));
 				panel.add(getUtilizationThreshold());
 				panel.add(getBestModelCheckBox());
+				// row 4
+				panel.add(new JLabel("Partition folder:"));
 				panel.add(getInputDir());
 				panel.add(getInputOpenFolder());
+				// row 5
+				panel.add(new JLabel("Model folder:"));
 				panel.add(getOutputDir());
 				panel.add(getOutputOpenFolder());
+				// row 6
+				panel.add(new JLabel(" "));
 				panel.add(getAnalyseButton());
+				panel.add(new JLabel(" "));
 
 				newFrame.add(panel);
 				newFrame.setVisible(true);

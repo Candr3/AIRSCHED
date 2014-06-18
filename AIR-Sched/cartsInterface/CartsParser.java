@@ -63,9 +63,10 @@ public class CartsParser {
 			// int HyperPeriod = PartitionUtils.getPartsHp(lop);
 			// System.out.println("lol -> " + HyperPeriod);
 
-			// largest period
-			int HyperPeriod = PartitionUtils.getLargestPeriod(lop);
-			System.out.println("lol -> " + HyperPeriod);
+			// largest period - prolly must be implemment some mechanism to use
+			// this function
+			// int HyperPeriod = PartitionUtils.getLargestPeriod(lop);
+			// System.out.println("lol -> " + HyperPeriod);
 
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -81,14 +82,14 @@ public class CartsParser {
 			ossched.setValue("DM");
 			root.setAttributeNode(ossched);
 
-			// min period
+			// min period 1
 			Attr min_period = doc.createAttribute("min_period");
-			min_period.setValue("1");
+			min_period.setValue(String.valueOf(Airsched.getMin_period()));
 			root.setAttributeNode(min_period);
 
-			// max period
+			// max period hyperperiod
 			Attr max_period = doc.createAttribute("max_period");
-			max_period.setValue(String.valueOf(HyperPeriod));
+			max_period.setValue(String.valueOf(Airsched.getMax_period()));
 			root.setAttributeNode(max_period);
 
 			for (Partition p : lop) {
@@ -109,12 +110,14 @@ public class CartsParser {
 
 				// min_period
 				Attr c_minp = doc.createAttribute("min_period");
-				c_minp.setValue("1");
+				// 1
+				c_minp.setValue(String.valueOf(Airsched.getMin_period()));
 				component.setAttributeNode(c_minp);
 
 				// max_period
 				Attr c_maxp = doc.createAttribute("max_period");
-				c_maxp.setValue(String.valueOf(HyperPeriod));
+				// hyperperiod
+				c_maxp.setValue(String.valueOf(Airsched.getMax_period()));
 				component.setAttributeNode(c_maxp);
 
 				for (PeriodicTask pt : p.getWorkload()) {
