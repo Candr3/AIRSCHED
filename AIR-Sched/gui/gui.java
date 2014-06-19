@@ -94,7 +94,8 @@ public class gui {
 	}
 
 	private static JComboBox<String> getOrderComboBox() {
-		String[] opt = { "Criticality first", "Larger first", "Smaller first" };
+		String[] opt = { "No order", "Criticality first", "Larger first",
+				"Smaller first" };
 		JComboBox<String> ret = new JComboBox<String>(opt);
 		ret.setSelectedIndex(0);
 		ret.addActionListener(new ActionListener() {

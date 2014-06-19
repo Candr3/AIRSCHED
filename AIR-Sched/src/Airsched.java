@@ -18,9 +18,10 @@ public class Airsched {
 	public static final int DUMMY_PARTITION_PADDING = 1;
 	public static final int PARAMETRIC_PARTITION_PADDING = 2;
 
-	public static final int CRITICALITY_FIRST = 0;
-	public static final int LARGER_FIRST = 1;
-	public static final int SMALLER_FIRST = 2;
+	public static final int NO_ORDER = 0;
+	public static final int CRITICALITY_FIRST = 1;
+	public static final int LARGER_FIRST = 2;
+	public static final int SMALLER_FIRST = 3;
 
 	public static final int UTILIZATION_THRESHOLD = 100;
 
@@ -103,7 +104,7 @@ public class Airsched {
 	}
 
 	public static void setOrder(int i) {
-		if (i >= 0 && i <= 2) {
+		if (i >= 0 && i <= 3) {
 			order = i;
 		}
 	}

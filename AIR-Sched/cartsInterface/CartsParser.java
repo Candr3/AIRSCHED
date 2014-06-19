@@ -68,6 +68,14 @@ public class CartsParser {
 			// int HyperPeriod = PartitionUtils.getLargestPeriod(lop);
 			// System.out.println("lol -> " + HyperPeriod);
 
+			// check periods
+			int int_min_period = Airsched.getMin_period();
+			int int_max_period = Airsched.getMax_period();
+			if (int_min_period <= 0 && int_max_period <= 0) {
+				int_min_period = 1;
+				int_max_period = PartitionUtils.getLargestPeriod(lop);
+			}
+
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
@@ -84,12 +92,12 @@ public class CartsParser {
 
 			// min period 1
 			Attr min_period = doc.createAttribute("min_period");
-			min_period.setValue(String.valueOf(Airsched.getMin_period()));
+			min_period.setValue(String.valueOf(int_min_period));
 			root.setAttributeNode(min_period);
 
 			// max period hyperperiod
 			Attr max_period = doc.createAttribute("max_period");
-			max_period.setValue(String.valueOf(Airsched.getMax_period()));
+			max_period.setValue(String.valueOf(int_max_period));
 			root.setAttributeNode(max_period);
 
 			for (Partition p : lop) {
@@ -111,13 +119,13 @@ public class CartsParser {
 				// min_period
 				Attr c_minp = doc.createAttribute("min_period");
 				// 1
-				c_minp.setValue(String.valueOf(Airsched.getMin_period()));
+				c_minp.setValue(String.valueOf(int_min_period));
 				component.setAttributeNode(c_minp);
 
 				// max_period
 				Attr c_maxp = doc.createAttribute("max_period");
 				// hyperperiod
-				c_maxp.setValue(String.valueOf(Airsched.getMax_period()));
+				c_maxp.setValue(String.valueOf(int_max_period));
 				component.setAttributeNode(c_maxp);
 
 				for (PeriodicTask pt : p.getWorkload()) {

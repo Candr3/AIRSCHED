@@ -53,4 +53,13 @@ public class PartitionUtils {
 		return -1;
 	}
 
+	public static Partition getPartition(List<Partition> lop, String name) {
+		for (Partition p : lop) {
+			if (p.getName().equals(name)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
 }

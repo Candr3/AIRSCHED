@@ -1,24 +1,24 @@
 <component name="OS Scheduler" algorithm="PRM interface">
 	<resource>
-		<model period="20" bandwidth="0.85" deadline="20"> </model>
+		<model period="30" bandwidth="0.9" deadline="30"> </model>
 	</resource>
 	<processed_task>
-		<model period="20" execution_time="17" deadline="20"> </model>
+		<model period="30" execution_time="27" deadline="30"> </model>
 	</processed_task>
 	<component name="part2" algorithm="PRM interface">
 		<resource>
-			<model period="20" bandwidth="0.4" deadline="20"> </model>
+			<model period="30" bandwidth="0.4333" deadline="30"> </model>
 		</resource>
 		<processed_task>
-			<model period="20" execution_time="8" deadline="20"> </model>
+			<model period="30" execution_time="13" deadline="30"> </model>
 		</processed_task>
 	</component>
 	<component name="part1" algorithm="PRM interface">
 		<resource>
-			<model period="20" bandwidth="0.25" deadline="20"> </model>
+			<model period="30" bandwidth="0.3" deadline="30"> </model>
 		</resource>
 		<processed_task>
-			<model period="20" execution_time="5" deadline="20"> </model>
+			<model period="30" execution_time="9" deadline="30"> </model>
 		</processed_task>
 	</component>
 </component>

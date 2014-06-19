@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import comparators.PartitionCriticalityFirstComparator;
@@ -15,6 +16,7 @@ import models.CartsModel;
 import models.Partition;
 import models.PeriodicTask;
 import src.Airsched;
+import utils.PartitionUtils;
 
 public class CheddarParser {
 
@@ -71,19 +73,27 @@ public class CheddarParser {
 			bwriter.write("    </core_unit>\n");
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
-			
-			// dummy part
-			if (Airsched.getPartitionPaddingMode() == Airsched.DUMMY_PARTITION_PADDING) {
+
+			// padding
+			switch (Airsched.getPartitionPaddingMode()) {
+			case (Airsched.DUMMY_PARTITION_PADDING):
 				int sysIdle = cm.getSystemIdle();
 				CartsComponent dummy = new CartsComponent("IDLE",
 						"RATE_MONOTONIC_PROTOCOL", 0, sysIdle, sysIdle, 0.0);
 				cm.addComponent(dummy);
+				break;
+			case (Airsched.PARAMETRIC_PARTITION_PADDING):
+				int remaining = cm.getSystemIdle();
+				//TODO
+				break;
+			default:
+				break;
 			}
-			// parametric
-			//TODO pocrl
 
 			// sorts components
 			switch (Airsched.getOrder()) {
+			case (Airsched.NO_ORDER):
+				break;
 			case (Airsched.CRITICALITY_FIRST):
 				cm.sort(new PartitionCriticalityFirstComparator());
 				break;
@@ -94,15 +104,16 @@ public class CheddarParser {
 				cm.sort(new PartitionSmallerPeriodFirstComparator());
 				break;
 			default:
-				System.out.println("deu merda!");
+				// System.out.println("deu merda!");
 				break;
 			}
 
-			for (int i = 0; i < lop.size(); i++) {
+			ArrayList<CartsComponent> comps = cm.getModel_components();
+			for (int i = 0; i < comps.size(); i++) {
 				id++;
 				bwriter.write("    <address_space id=\" " + id + "\">\n");
 				bwriter.write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n");
-				bwriter.write("      <name>" + lop.get(i).getName()
+				bwriter.write("      <name>" + comps.get(i).getName()
 						+ "</name>\n");
 				bwriter.write("      <cpu_name>processor1</cpu_name>\n");
 				bwriter.write("      <text_memory_size>0</text_memory_size>\n");
@@ -113,8 +124,7 @@ public class CheddarParser {
 				bwriter.write("        <scheduling_parameters>\n");
 				bwriter.write("          <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>\n");
 				bwriter.write("          <quantum>"
-						+ cm.getModel_components().get(i).getExecution()
-						+ "</quantum>\n");
+						+ comps.get(i).getExecution() + "</quantum>\n");
 				bwriter.write("          <preemptive_type>PREEMPTIVE</preemptive_type>\n");
 				bwriter.write("          <capacity>0</capacity>\n");
 				bwriter.write("          <period>0</period>\n");
@@ -167,33 +177,38 @@ public class CheddarParser {
 			bwriter.write("    </mono_core_processor>\n");
 			bwriter.write("  </processors>\n");
 			bwriter.write("  <tasks>\n");
-			for (Partition p : lop) {
-				for (PeriodicTask pt : p.getWorkload()) {
-					id++;
-					bwriter.write("    <periodic_task id=\" " + id + "\">\n");
-					bwriter.write("      <object_type>TASK_OBJECT_TYPE</object_type>\n");
-					bwriter.write("      <name>" + p.getName() + "_"
-							+ pt.getName() + "</name>\n");
-					bwriter.write("      <task_type>PERIODIC_TYPE</task_type>\n");
-					bwriter.write("      <cpu_name>processor1</cpu_name>\n");
-					bwriter.write("      <address_space_name>" + p.getName()
-							+ "</address_space_name>\n");
-					bwriter.write("      <capacity>" + pt.getCapacity()
-							+ "</capacity>\n");
-					bwriter.write("      <deadline>" + pt.getPeriod()
-							+ "</deadline>\n");
-					bwriter.write("      <start_time>0</start_time>\n");
-					bwriter.write("      <priority>1</priority>\n");
-					bwriter.write("      <blocking_time>0</blocking_time>\n");
-					bwriter.write("      <policy>SCHED_FIFO</policy>\n");
-					bwriter.write("      <text_memory_size>0</text_memory_size>\n");
-					bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
-					bwriter.write("      <criticality>0</criticality>\n");
-					bwriter.write("      <context_switch_overhead>0</context_switch_overhead>\n");
-					bwriter.write("      <period>" + pt.getPeriod()
-							+ "</period>\n");
-					bwriter.write("      <jitter>0</jitter>\n");
-					bwriter.write("    </periodic_task>\n");
+			// for (Partition p : lop) {
+			for (CartsComponent cc : comps) {
+				Partition p = PartitionUtils.getPartition(lop, cc.getName());
+				if (p != null) {
+					for (PeriodicTask pt : p.getWorkload()) {
+						id++;
+						bwriter.write("    <periodic_task id=\" " + id
+								+ "\">\n");
+						bwriter.write("      <object_type>TASK_OBJECT_TYPE</object_type>\n");
+						bwriter.write("      <name>" + p.getName() + "_"
+								+ pt.getName() + "</name>\n");
+						bwriter.write("      <task_type>PERIODIC_TYPE</task_type>\n");
+						bwriter.write("      <cpu_name>processor1</cpu_name>\n");
+						bwriter.write("      <address_space_name>"
+								+ p.getName() + "</address_space_name>\n");
+						bwriter.write("      <capacity>" + pt.getCapacity()
+								+ "</capacity>\n");
+						bwriter.write("      <deadline>" + pt.getPeriod()
+								+ "</deadline>\n");
+						bwriter.write("      <start_time>0</start_time>\n");
+						bwriter.write("      <priority>1</priority>\n");
+						bwriter.write("      <blocking_time>0</blocking_time>\n");
+						bwriter.write("      <policy>SCHED_FIFO</policy>\n");
+						bwriter.write("      <text_memory_size>0</text_memory_size>\n");
+						bwriter.write("      <stack_memory_size>0</stack_memory_size>\n");
+						bwriter.write("      <criticality>0</criticality>\n");
+						bwriter.write("      <context_switch_overhead>0</context_switch_overhead>\n");
+						bwriter.write("      <period>" + pt.getPeriod()
+								+ "</period>\n");
+						bwriter.write("      <jitter>0</jitter>\n");
+						bwriter.write("    </periodic_task>\n");
+					}
 				}
 			}
 			bwriter.write("  </tasks>\n");
