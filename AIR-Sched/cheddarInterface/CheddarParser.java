@@ -77,6 +77,23 @@ public class CheddarParser {
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
 
+			// sorts components
+			switch (Airsched.getOrder()) {
+			case (Airsched.NO_ORDER):
+				break;
+			case (Airsched.CRITICALITY_FIRST):
+				cm.sort(new PartitionCriticalityFirstComparator());
+				break;
+			case (Airsched.LARGER_FIRST):
+				cm.sort(new PartitionLargerPeriodFirstComparator());
+				break;
+			case (Airsched.SMALLER_FIRST):
+				cm.sort(new PartitionSmallerPeriodFirstComparator());
+				break;
+			default:
+				break;
+			}
+
 			// padding
 			switch (Airsched.getPartitionPaddingMode()) {
 			case (Airsched.DUMMY_PARTITION_PADDING):
@@ -97,24 +114,6 @@ public class CheddarParser {
 				}
 				break;
 			default:
-				break;
-			}
-
-			// sorts components
-			switch (Airsched.getOrder()) {
-			case (Airsched.NO_ORDER):
-				break;
-			case (Airsched.CRITICALITY_FIRST):
-				cm.sort(new PartitionCriticalityFirstComparator());
-				break;
-			case (Airsched.LARGER_FIRST):
-				cm.sort(new PartitionLargerPeriodFirstComparator());
-				break;
-			case (Airsched.SMALLER_FIRST):
-				cm.sort(new PartitionSmallerPeriodFirstComparator());
-				break;
-			default:
-				// System.out.println("deu merda!");
 				break;
 			}
 
