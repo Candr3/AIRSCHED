@@ -30,7 +30,10 @@ public class CheddarParser {
 		// -> file
 		File dir = new File(OUTPUT_DIR);
 		// File file = new File(OUTPUT_FILE);
-		File output_file = new File(OUTPUT_DIR + "/" + filename + ".xml");
+		File output_file = new File(OUTPUT_DIR + "/" + filename + "_period-"
+				+ cm.getModel_period() + "_execution-"
+				+ cm.getModel_execution() + "_bandwith-"
+				+ cm.getModel_bandwith() + ".xml");
 		// System.out.println(dir.getCanonicalPath());
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -84,7 +87,14 @@ public class CheddarParser {
 				break;
 			case (Airsched.PARAMETRIC_PARTITION_PADDING):
 				int remaining = cm.getSystemIdle();
-				//TODO
+				List<CartsComponent> ccs = cm.getModel_components();
+				int index = 0,
+				size = ccs.size();
+				while (remaining > 0) {
+					ccs.get(index % size).incrementExecution();
+					remaining--;
+					index++;
+				}
 				break;
 			default:
 				break;

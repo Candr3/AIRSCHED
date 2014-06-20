@@ -54,4 +54,12 @@ public class CartsComponent {
 		return str.toString();
 	}
 
+	public void incrementExecution() {
+		this.execution++;
+	}
+
+	public void incrementExecution(int i) {
+		this.execution += i;
+	}
+
 }
