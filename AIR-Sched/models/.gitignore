@@ -5,3 +5,7 @@
 /CartsModel.class
 /CartsComponent.class
 /PartitionCriticalityFirstComparator.class
+/Comms.class
+/CommMode.class
+/SamplingComm.class
+/QueueingComm.class

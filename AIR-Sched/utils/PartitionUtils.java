@@ -62,4 +62,15 @@ public class PartitionUtils {
 		return null;
 	}
 
+	public static PeriodicTask getTask(List<Partition> lop, String part_name,
+			String task_name) {
+		Partition p = getPartition(lop, part_name);
+		for (PeriodicTask pt : p.getWorkload()) {
+			if (pt.getName().equals(task_name)) {
+				return pt;
+			}
+		}
+		return null;
+	}
+
 }

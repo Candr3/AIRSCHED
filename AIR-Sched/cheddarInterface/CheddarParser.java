@@ -48,6 +48,9 @@ public class CheddarParser {
 		}
 		// dir.mkdir();
 
+		// sorts order
+		SortsOrder(cm);
+
 		try {
 
 			int id = 0;
@@ -76,46 +79,6 @@ public class CheddarParser {
 			bwriter.write("    </core_unit>\n");
 			bwriter.write("  </core_units>\n");
 			bwriter.write("  <address_spaces>\n");
-
-			// sorts components
-			switch (Airsched.getOrder()) {
-			case (Airsched.NO_ORDER):
-				break;
-			case (Airsched.CRITICALITY_FIRST):
-				cm.sort(new PartitionCriticalityFirstComparator());
-				break;
-			case (Airsched.LARGER_FIRST):
-				cm.sort(new PartitionLargerPeriodFirstComparator());
-				break;
-			case (Airsched.SMALLER_FIRST):
-				cm.sort(new PartitionSmallerPeriodFirstComparator());
-				break;
-			default:
-				break;
-			}
-
-			// padding
-			switch (Airsched.getPartitionPaddingMode()) {
-			case (Airsched.DUMMY_PARTITION_PADDING):
-				int sysIdle = cm.getSystemIdle();
-				CartsComponent dummy = new CartsComponent("IDLE",
-						"RATE_MONOTONIC_PROTOCOL", 0, sysIdle, sysIdle, 0.0);
-				cm.addComponent(dummy);
-				break;
-			case (Airsched.PARAMETRIC_PARTITION_PADDING):
-				int remaining = cm.getSystemIdle();
-				List<CartsComponent> ccs = cm.getModel_components();
-				int index = 0,
-				size = ccs.size();
-				while (remaining > 0) {
-					ccs.get(index % size).incrementExecution();
-					remaining--;
-					index++;
-				}
-				break;
-			default:
-				break;
-			}
 
 			ArrayList<CartsComponent> comps = cm.getModel_components();
 			for (int i = 0; i < comps.size(); i++) {
@@ -233,4 +196,49 @@ public class CheddarParser {
 
 		return true;
 	}
+
+	private static void SortsOrder(CartsModel cm) {
+		
+		// sorts components
+		switch (Airsched.getOrder()) {
+		case (Airsched.NO_ORDER):
+			break;
+		case (Airsched.CRITICALITY_FIRST):
+			cm.sort(new PartitionCriticalityFirstComparator());
+			break;
+		case (Airsched.LARGER_FIRST):
+			cm.sort(new PartitionLargerPeriodFirstComparator());
+			break;
+		case (Airsched.SMALLER_FIRST):
+			cm.sort(new PartitionSmallerPeriodFirstComparator());
+			break;
+		default:
+			break;
+		}
+
+		// padding
+		switch (Airsched.getPartitionPaddingMode()) {
+		case (Airsched.DUMMY_PARTITION_PADDING):
+			int sysIdle = cm.getSystemIdle();
+			CartsComponent dummy = new CartsComponent("IDLE",
+					"RATE_MONOTONIC_PROTOCOL", 0, sysIdle, sysIdle, 0.0);
+			cm.addComponent(dummy);
+			break;
+		case (Airsched.PARAMETRIC_PARTITION_PADDING):
+			int remaining = cm.getSystemIdle();
+			List<CartsComponent> ccs = cm.getModel_components();
+			int index = 0,
+			size = ccs.size();
+			while (remaining > 0) {
+				ccs.get(index % size).incrementExecution();
+				remaining--;
+				index++;
+			}
+			break;
+		default:
+			break;
+		}
+		
+	}
+
 }
