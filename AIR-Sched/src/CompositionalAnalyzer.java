@@ -2,8 +2,9 @@ package src;
 
 import java.io.IOException;
 
+import utils.MathUtils;
+
 import deprecated.Logger;
-import deprecated.MathUtils;
 
 import models.Partition;
 

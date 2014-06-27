@@ -30,7 +30,7 @@
       <scheduling>
         <scheduling_parameters>
           <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>
-          <quantum>3</quantum>
+          <quantum>8</quantum>
           <preemptive_type>PREEMPTIVE</preemptive_type>
           <capacity>0</capacity>
           <period>0</period>
@@ -50,7 +50,7 @@
       <scheduling>
         <scheduling_parameters>
           <scheduler_type>RATE_MONOTONIC_PROTOCOL</scheduler_type>
-          <quantum>2</quantum>
+          <quantum>6</quantum>
           <preemptive_type>PREEMPTIVE</preemptive_type>
           <capacity>0</capacity>
           <period>0</period>

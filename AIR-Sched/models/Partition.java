@@ -3,7 +3,8 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import deprecated.MathUtils;
+import utils.MathUtils;
+
 
 public class Partition {
 

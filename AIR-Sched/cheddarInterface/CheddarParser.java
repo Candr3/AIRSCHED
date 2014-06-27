@@ -20,18 +20,16 @@ import utils.PartitionUtils;
 
 public class CheddarParser {
 
-	private static final String OUTPUT_DIR = "cheddarFiles/xml";
-
 	// private static final String OUTPUT_FILE = "cheddarFiles/xml/input.xml";
 
 	public static boolean createCheddarXml(List<Partition> lop, CartsModel cm,
 			String filename) {
 
 		// -> file
-		File dir = new File(OUTPUT_DIR);
+		File dir = new File(Airsched.DEFAULT_OUTPUT_DIR);
 		// File file = new File(OUTPUT_FILE);
-		File output_file = new File(OUTPUT_DIR + "/" + filename + "_period-"
-				+ cm.getModel_period() + "_execution-"
+		File output_file = new File(Airsched.DEFAULT_OUTPUT_DIR + "/"
+				+ filename + "_period-" + cm.getModel_period() + "_execution-"
 				+ cm.getModel_execution() + "_bandwith-"
 				+ cm.getModel_bandwith() + ".xml");
 		// System.out.println(dir.getCanonicalPath());
@@ -198,7 +196,7 @@ public class CheddarParser {
 	}
 
 	private static void SortsOrder(CartsModel cm) {
-		
+
 		// sorts components
 		switch (Airsched.getOrder()) {
 		case (Airsched.NO_ORDER):
@@ -238,7 +236,7 @@ public class CheddarParser {
 		default:
 			break;
 		}
-		
+
 	}
 
 }

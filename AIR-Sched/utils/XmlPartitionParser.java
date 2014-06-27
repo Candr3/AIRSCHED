@@ -16,20 +16,22 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import src.Airsched;
+
 public class XmlPartitionParser {
 
 	// le as partições dos ficheiros xml e retorna um array com os objectos que
 	// representão as mesmas
 	public static ArrayList<Partition> parsePartitions() {
 		ArrayList<Partition> ret = new ArrayList<Partition>();
-		File folder = new File("partitions");
+		File folder = new File(Airsched.DEFAULT_INPUT_DIR);
 		File[] listOfXmlPart = folder.listFiles();
 		for (File f : listOfXmlPart) {
 			if (f.getName().endsWith(".xml")) {
 				try {
 					ret.add(parsePartition(f.getAbsolutePath()));
 				} catch (Exception e) {
-					System.out.println("lol");
+					System.out.println("Partition parsing error.");
 					e.printStackTrace();
 				}
 			}
@@ -47,7 +49,7 @@ public class XmlPartitionParser {
 				try {
 					ret.add(parsePartition(f.getAbsolutePath()));
 				} catch (Exception e) {
-					System.out.println("lol");
+					System.out.println("Partition parsing error.");
 					e.printStackTrace();
 				}
 			}

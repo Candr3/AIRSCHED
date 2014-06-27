@@ -33,6 +33,7 @@ public class SamplingComm implements CommMode {
 		int send_cap = pt.getCapacity();
 		// int recv_per = PartitionUtils.getTask(lop, dest_part,
 		// dest_task).getPeriod();
+
 		return ((2 * send_per) - send_cap) + delay <= validityInterval;
 	}
 

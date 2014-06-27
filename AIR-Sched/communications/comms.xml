@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <communications>
 	<comm>
-		<sender_part_id> 1 </sender_part_id>
-		<sender_part_task_id> 1 </sender_part_task_id>
-		<receiver_part_id> 2 </receiver_part_id>
-		<receiver_part_task_id> 2 </receiver_part_task_id>
-		<comm_type> COMMUNICATION_TYPE_SAMPLING </comm_type>
-		<comm_buffer_size> </comm_buffer_size>
-		<comm_validity_interval> 10 </comm_validity_interval>
-		<comm_latency> </comm_latency>
+		<sender_part_id>1</sender_part_id>
+		<sender_part_task_id>1</sender_part_task_id>
+		<receiver_part_id>2</receiver_part_id>
+		<receiver_part_task_id>2</receiver_part_task_id>
+		<comm_type>COMMUNICATION_TYPE_SAMPLING</comm_type>
+		<comm_buffer_size></comm_buffer_size>
+		<comm_validity_interval>10</comm_validity_interval>
+		<comm_latency></comm_latency>
 	</comm>
 	<comm>
-		<sender_part_id> 2 </sender_part_id>
-		<sender_part_task_id> 2 </sender_part_task_id>
-		<receiver_part_id> 1 </receiver_part_id>
-		<receiver_part_task_id> 1 </receiver_part_task_id>
-		<comm_type> COMMUNICATION_TYPE_QUEUEING </comm_type>
-		<comm_buffer_size> 10 </comm_buffer_size>
-		<comm_validity_interval> </comm_validity_interval>
-		<comm_latency> </comm_latency>
+		<sender_part_id>2</sender_part_id>
+		<sender_part_task_id>2</sender_part_task_id>
+		<receiver_part_id>1</receiver_part_id>
+		<receiver_part_task_id>1</receiver_part_task_id>
+		<comm_type>COMMUNICATION_TYPE_QUEUEING</comm_type>
+		<comm_buffer_size>10</comm_buffer_size>
+		<comm_validity_interval></comm_validity_interval>
+		<comm_latency></comm_latency>
 	</comm>	
 </communications>

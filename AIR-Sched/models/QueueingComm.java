@@ -2,6 +2,9 @@ package models;
 
 import java.util.List;
 
+import utils.MathUtils;
+import utils.PartitionUtils;
+
 public class QueueingComm implements CommMode {
 
 	private String source_part;
@@ -26,7 +29,17 @@ public class QueueingComm implements CommMode {
 	}
 
 	public boolean checkFeasibility(List<Partition> lop) {
-		
+		PeriodicTask pts = PartitionUtils
+				.getTask(lop, source_part, source_task);
+		int send_per = pts.getPeriod();
+		// int send_cap = pts.getCapacity();
+		PeriodicTask ptr = PartitionUtils
+				.getTask(lop, source_part, source_task);
+		int recv_per = ptr.getPeriod();
+		// int recvs_cap = ptr.getCapacity();
+
+		return MathUtils.upperBoundDivision(delay, send_per) <= bufferSize
+				&& (send_per / recv_per) <= 1;
 	}
-	
+
 }

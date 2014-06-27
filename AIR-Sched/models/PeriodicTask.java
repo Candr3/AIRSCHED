@@ -1,6 +1,6 @@
 package models;
 
-import deprecated.MathUtils;
+import utils.MathUtils;
 
 public class PeriodicTask {
 

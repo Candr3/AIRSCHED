@@ -1,4 +1,4 @@
-package deprecated;
+package utils;
 
 // not used
 public class MathUtils {

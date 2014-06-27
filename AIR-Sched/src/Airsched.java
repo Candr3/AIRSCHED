@@ -23,10 +23,14 @@ public class Airsched {
 	public static final int LARGER_FIRST = 2;
 	public static final int SMALLER_FIRST = 3;
 
+	public static final String MODE_SAMPLING = "COMMUNICATION_TYPE_SAMPLING";
+	public static final String MODE_QUEUEING = "COMMUNICATION_TYPE_QUEUEING";
+
 	public static final int UTILIZATION_THRESHOLD = 100;
 
 	public static final String DEFAULT_INPUT_DIR = "partitions";
 	public static final String DEFAULT_OUTPUT_DIR = "cheddarFiles/xml";
+	public static final String DEFAULT_COMM_DIR = "communications";
 
 	private static int partition_padding_mode;
 	private static int order;
@@ -57,6 +61,8 @@ public class Airsched {
 	public static void analyse() {
 
 		schedSystem = new SchedSystem();
+
+		test();
 
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
@@ -167,6 +173,10 @@ public class Airsched {
 		} else {
 			return -1;
 		}
+	}
+
+	private static void test() {
+		utils.XmlCommParser.parseCommunications();
 	}
 
 }
