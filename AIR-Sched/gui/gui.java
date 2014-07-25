@@ -75,8 +75,8 @@ public class gui {
 	}
 
 	private static JComboBox<String> getPaddingComboBox() {
-		String[] options = { "No padding", "Empty partition",
-				"Parametric padding" };
+		String[] options = { "No padding", "Empty partition"};
+//				, "Parametric padding" };
 		JComboBox<String> ret = new JComboBox<String>(options);
 		ret.setSelectedIndex(0);
 		ret.addActionListener(new ActionListener() {
@@ -175,8 +175,7 @@ public class gui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop()
-							.open(new File(Airsched.getInput_dir()));
+					openFolder(Airsched.getInput_dir());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					// throwError("Invalid directory!");
@@ -207,8 +206,7 @@ public class gui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop().open(
-							new File(Airsched.getOutput_dir()));
+					openFolder(Airsched.getOutput_dir());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					// throwError("Invalid directory!");
@@ -267,6 +265,13 @@ public class gui {
 		return ret;
 	}
 
+	private static void openFolder(String path) throws IOException {
+		File dir = new File(path);
+		if(!dir.exists())
+			dir.mkdirs();
+		Desktop.getDesktop().open(dir);
+	}
+	
 	public static void generateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override

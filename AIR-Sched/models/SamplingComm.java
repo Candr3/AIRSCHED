@@ -4,6 +4,7 @@ import java.util.List;
 
 import utils.PartitionUtils;
 
+@SuppressWarnings("unused")
 public class SamplingComm implements CommMode {
 
 	private String source_part;

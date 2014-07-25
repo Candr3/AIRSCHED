@@ -1,4 +1,4 @@
-package src;
+package compositional_analyzer;
 
 import java.io.IOException;
 

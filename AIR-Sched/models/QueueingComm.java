@@ -5,6 +5,7 @@ import java.util.List;
 import utils.MathUtils;
 import utils.PartitionUtils;
 
+@SuppressWarnings("unused")
 public class QueueingComm implements CommMode {
 
 	private String source_part;

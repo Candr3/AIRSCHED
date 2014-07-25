@@ -62,8 +62,6 @@ public class Airsched {
 
 		schedSystem = new SchedSystem();
 
-		test();
-
 		// CompositionalAnalyzer.PRM(p)
 		// XmlReader.printXmlFile("partitions/partition1.xml");
 		ArrayList<Partition> partitionList = XmlPartitionParser
@@ -173,10 +171,6 @@ public class Airsched {
 		} else {
 			return -1;
 		}
-	}
-
-	private static void test() {
-		utils.XmlCommParser.parseCommunications();
 	}
 
 }
