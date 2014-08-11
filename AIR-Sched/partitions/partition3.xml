@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<partition>
+	<partition_name>part3</partition_name>
+	<partition_id>3</partition_id>
+	<partition_criticality>5</partition_criticality>
+	<partition_period></partition_period>
+	<partition_duration>300</partition_duration>
+	<partition_sched_policy>RATE_MONOTONIC</partition_sched_policy>
+	<tasks>
+		<task>
+			<task_name>tarefa_um</task_name>
+			<task_id>8</task_id>
+			<task_period>250</task_period>
+			<task_wcet>35</task_wcet>
+			<task_deadline>hard</task_deadline>
+			<task_priority>1</task_priority>
+		</task>
+		<task>
+			<task_name>tarefa_dois</task_name>
+			<task_id>9</task_id>
+			<task_period>1000</task_period>
+			<task_wcet>99</task_wcet>
+			<task_deadline>hard</task_deadline>
+			<task_priority>2</task_priority>
+		</task>
+	</tasks>
+</partition>

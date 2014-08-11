@@ -14,6 +14,9 @@ import cheddarInterface.CheddarParser;
 
 public class Airsched {
 
+	public static final int PERIODIC_RESOURCE_MODEL = 0;
+	public static final int EXPLICIT_DEADLINE_MODEL = 1;
+	
 	public static final int NO_PARTITION_PADDING = 0;
 	public static final int DUMMY_PARTITION_PADDING = 1;
 	public static final int PARAMETRIC_PARTITION_PADDING = 2;
@@ -32,6 +35,7 @@ public class Airsched {
 	public static final String DEFAULT_OUTPUT_DIR = "cheddarFiles/xml";
 	public static final String DEFAULT_COMM_DIR = "communications";
 
+	private static int model;
 	private static int partition_padding_mode;
 	private static int order;
 	private static int min_period;
@@ -45,6 +49,7 @@ public class Airsched {
 
 	public static void main(String[] args) {
 
+		model = 0;
 		partition_padding_mode = NO_PARTITION_PADDING;
 		order = CRITICALITY_FIRST;
 		min_period = 10;
@@ -173,4 +178,13 @@ public class Airsched {
 		}
 	}
 
+	public static void setModel(int i) {
+		if( i == 0 || i == 1)
+			model = i;
+	}
+	
+	public static int getModel() {
+		return model;
+	}
+	
 }
