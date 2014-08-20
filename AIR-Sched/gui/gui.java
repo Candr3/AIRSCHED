@@ -76,7 +76,7 @@ public class gui {
 
 	private static JComboBox<String> getPaddingComboBox() {
 		String[] options = { "No padding", "Empty partition"};
-//				, "Parametric padding" };
+//		String[] options = { "No padding", "Empty partition", "Parametric padding" };
 		JComboBox<String> ret = new JComboBox<String>(options);
 		ret.setSelectedIndex(0);
 		ret.addActionListener(new ActionListener() {
