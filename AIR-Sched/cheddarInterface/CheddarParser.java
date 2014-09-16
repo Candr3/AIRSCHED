@@ -59,7 +59,7 @@ public class CheddarParser {
 			bwriter.write("<cheddar>\n");
 			bwriter.write("  <core_units>\n");
 			id++;
-			bwriter.write("    <core_unit id=\" " + id + "\">\n");
+			bwriter.write("    <core_unit id=\"id_" + id + "\">\n");
 			bwriter.write("      <object_type>CORE_OBJECT_TYPE</object_type>\n");
 			bwriter.write("      <name>core1</name>\n");
 			bwriter.write("      <scheduling>\n");
@@ -81,7 +81,7 @@ public class CheddarParser {
 			ArrayList<CartsComponent> comps = cm.getModel_components();
 			for (int i = 0; i < comps.size(); i++) {
 				id++;
-				bwriter.write("    <address_space id=\" " + id + "\">\n");
+				bwriter.write("    <address_space id=\"id_" + id + "\">\n");
 				bwriter.write("      <object_type>ADDRESS_SPACE_OBJECT_TYPE</object_type>\n");
 				bwriter.write("      <name>" + comps.get(i).getName()
 						+ "</name>\n");
@@ -137,13 +137,14 @@ public class CheddarParser {
 			bwriter.write("  </address_spaces>\n");
 			bwriter.write("  <processors>\n");
 			id++;
-			bwriter.write("    <mono_core_processor id=\" " + id + "\">\n");
+			bwriter.write("    <mono_core_processor id=\"id_" + id + "\">\n");
 			bwriter.write("      <object_type>PROCESSOR_OBJECT_TYPE</object_type>\n");
 			bwriter.write("      <name>processor1</name>\n");
 			bwriter.write("      <network>a_network</network>\n");
 			bwriter.write("      <processor_type>MONOCORE_TYPE</processor_type>\n");
 			bwriter.write("      <migration_type>NO_MIGRATION_TYPE</migration_type>\n");
-			bwriter.write("      <core ref=\" 1\"/>\n");
+			bwriter.write("      <core ref=\"id_1\">\n");
+			bwriter.write("      </core>\n");
 			bwriter.write("    </mono_core_processor>\n");
 			bwriter.write("  </processors>\n");
 			bwriter.write("  <tasks>\n");
@@ -153,7 +154,7 @@ public class CheddarParser {
 				if (p != null) {
 					for (PeriodicTask pt : p.getWorkload()) {
 						id++;
-						bwriter.write("    <periodic_task id=\" " + id
+						bwriter.write("    <periodic_task id=\"id_" + id
 								+ "\">\n");
 						bwriter.write("      <object_type>TASK_OBJECT_TYPE</object_type>\n");
 						bwriter.write("      <name>" + p.getName() + "_"

@@ -1,17 +1,17 @@
 <system max_period="100" min_period="10" os_scheduler="DM">
+<component max_period="100" min_period="10" name="part1" scheduler="DM">
+<task d="500" e="22" name="tarefa_um" p="500"/>
+<task d="500" e="31" name="tarefa_dois" p="500"/>
+<task d="1000" e="29" name="tarefa_tres" p="1000"/>
+</component>
 <component max_period="100" min_period="10" name="part3" scheduler="DM">
-<task d="250" e="35" name="tarefa_um" p="250"/>
-<task d="1000" e="99" name="tarefa_dois" p="1000"/>
+<task d="250" e="17" name="tarefa_um" p="250"/>
+<task d="1000" e="50" name="tarefa_dois" p="1000"/>
 </component>
 <component max_period="100" min_period="10" name="part2" scheduler="DM">
-<task d="250" e="29" name="tarefa_um" p="250"/>
-<task d="1000" e="28" name="tarefa_dois" p="1000"/>
-<task d="1000" e="50" name="tarefa_tres" p="1000"/>
-<task d="1000" e="89" name="tarefa_quatro" p="1000"/>
-</component>
-<component max_period="100" min_period="10" name="part1" scheduler="DM">
-<task d="500" e="44" name="tarefa_um" p="500"/>
-<task d="500" e="62" name="tarefa_dois" p="500"/>
-<task d="1000" e="58" name="tarefa_tres" p="1000"/>
+<task d="250" e="15" name="tarefa_um" p="250"/>
+<task d="1000" e="14" name="tarefa_dois" p="1000"/>
+<task d="1000" e="25" name="tarefa_tres" p="1000"/>
+<task d="1000" e="45" name="tarefa_quatro" p="1000"/>
 </component>
 </system>

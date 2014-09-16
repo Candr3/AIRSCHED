@@ -11,7 +11,7 @@
 			<task_name>tarefa_um</task_name>
 			<task_id>8</task_id>
 			<task_period>250</task_period>
-			<task_wcet>35</task_wcet>
+			<task_wcet>17</task_wcet>
 			<task_deadline>hard</task_deadline>
 			<task_priority>1</task_priority>
 		</task>
@@ -19,7 +19,7 @@
 			<task_name>tarefa_dois</task_name>
 			<task_id>9</task_id>
 			<task_period>1000</task_period>
-			<task_wcet>99</task_wcet>
+			<task_wcet>50</task_wcet>
 			<task_deadline>hard</task_deadline>
 			<task_priority>2</task_priority>
 		</task>
