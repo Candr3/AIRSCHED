@@ -1,0 +1,9 @@
+.idea/*
+AIRSCHED.iml
+
+AIR-sched/.settings/*
+AIR-sched/.classpath
+AIR-sched/.project
+
+out/*
+AIR-sched/out/*
